@@ -1,0 +1,29 @@
+{
+  "name": "phore/http-client",
+  "description": "Http client library for fast api access",
+  "keywords": ["Keyword1", "Keyword2"],
+  "license": "MIT",
+  "authors": [
+    { "name": "Matthias Leuffen", "email": "m@tth.es" }
+  ],
+  "repositories": [
+  ],
+  "require": {
+    "php": ">=7.1",
+    "ext-curl": "*",
+    "ext-http": "*",
+    "ext-json": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Phore\\HttpClient\\": "src/"
+    },
+    "files": [
+      "src/functions.php"
+    ]
+  },
+  "minimum-stability": "dev",
+  "require-dev": {
+    "nette/tester": "^2.1@dev"
+  }
+}
