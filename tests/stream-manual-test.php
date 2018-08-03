@@ -13,7 +13,7 @@ use Phore\HttpClient\Handler\PhoreHttpLineStream;
 
 require __DIR__ . "/../vendor/autoload.php";
 
-phore_http_request("GET", "http://localhost/test.php?case=stream")->withStreamReader(
+phore_http_request("http://localhost/test.php?case=stream")->withStreamReader(
     new PhoreHttpLineStream(function ($line, $index) {
         echo "\nLine " . $index . ":" . $line;
 
@@ -21,6 +21,4 @@ phore_http_request("GET", "http://localhost/test.php?case=stream")->withStreamRe
 )->send(false);
 
 
-
-http://datapool.talpa.io/<maschine>/?from=Dtaum&to=Datum
 

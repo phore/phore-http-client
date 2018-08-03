@@ -33,19 +33,16 @@ class PhoreHttpRequest
         "headers" => []
     ];
 
-    public function __construct($method, $url, array $params=[])
+    public function __construct($url, array $params=[])
     {
-        $this->request["method"] = $method;
         $this->request["url"] = $url;
         $this->driver = new PhoreHttp_CurlDriver();
-
     }
 
 
     public function withMethod(string $method) : self
     {
         $new = clone ($this);
-        //$new->request = $this->request;
         $new->request["method"] = $method;
         return $new;
     }
@@ -53,7 +50,6 @@ class PhoreHttpRequest
     public function withUrl($url, array $params=[]) : self
     {
         $new = clone ($this);
-        //$new->request = $this->request;
         $new->request["url"] = $url;
         return $new;
     }
@@ -61,7 +57,6 @@ class PhoreHttpRequest
     public function withQueryParams (array $queryParams=[]) : self
     {
         $new = clone ($this);
-        //$new->request = $this->request;
         $new->request["queryParams"] = $queryParams;
         return $new;
     }
@@ -69,7 +64,8 @@ class PhoreHttpRequest
     public function withPostData ($postData) : self
     {
         $new = clone ($this);
-        //$new->request = $this->request;
+        if ($new->request["method"] === "GET")
+            $new->request["method"] = "POST";
         $new->request["postBody"] = $postData;
         return $new;
     }
@@ -77,7 +73,6 @@ class PhoreHttpRequest
     public function withHeaders(array $headers = []) : self
     {
         $new = clone ($this);
-        //$new->request = $this->request;
         $new->request["headers"] = array_merge($new->request["headers"], $headers);
         return $new;
     }
@@ -85,7 +80,6 @@ class PhoreHttpRequest
     public function withBasicAuth(string $username=null, string $passwd=null) : self
     {
         $new = clone ($this);
-        //$new->request = $this->request;
         $new->request["basicAuthUser"] = $username;
         $new->request["basicAuthPass"] = $passwd;
         return $new;
@@ -100,7 +94,6 @@ class PhoreHttpRequest
     public function withStreamReader(PhoreStreamHandler $fn) : self
     {
         $new = clone ($this);
-        //$new->request = $this->request;
         $new->request["streamReaderCallback"] = $fn;
         return $new;
     }

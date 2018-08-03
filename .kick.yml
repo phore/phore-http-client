@@ -1,5 +1,5 @@
 version: 1
-from: "infracamp/kickstart-flavor-gaia"
+from: "infracamp/kickstart-flavor-gaia:testing"
 
 apache_fallback_resource: "/index.php"
 

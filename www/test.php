@@ -24,7 +24,7 @@ switch ($_GET["case"]) {
 
     case "stream":
         //ob_implicit_flush(true);
-        for($i=0; $i<1000000; $i++) {
+        for($i=0; $i<1000; $i++) {
             echo "\n$i" . str_pad("A", 100, "A");
         }
         exit;
