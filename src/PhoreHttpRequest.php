@@ -99,6 +99,12 @@ class PhoreHttpRequest
     }
 
 
+    public function withOAuth2Bearer ($oauth2Token) : self
+    {
+        return $this->withHeaders(["Authorization" => "Bearer $oauth2Token"]);
+    }
+
+
     /**
      * @param bool $throwException
      * @return PhoreHttpResponse
