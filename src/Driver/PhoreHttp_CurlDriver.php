@@ -10,8 +10,8 @@ namespace Phore\HttpClient\Driver;
 
 
 use http\Env\Response;
+use Phore\HttpClient\Ex\PhoreHttpRequestException;
 use Phore\HttpClient\PhoreHttpRequest;
-use Phore\HttpClient\PhoreHttpRequestException;
 use Phore\HttpClient\PhoreHttpResponse;
 
 class PhoreHttp_CurlDriver implements PhoreHttpDriver
@@ -22,16 +22,16 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
         CURLOPT_SAFE_UPLOAD => true,                // Allow only CurlFile for fileUploads
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_MAXREDIRS => 3,
-        CURLOPT_CONNECTTIMEOUT => 10
+        CURLOPT_CONNECTTIMEOUT => 10,
+        CURLOPT_TCP_FASTOPEN => true
     ];
 
 
-    /**
-     * @param PhoreHttpRequest $request
-     * @return PhoreHttpResponse
-     * @throws PhoreHttpRequestException
-     */
-    public function execRequest(PhoreHttpRequest $request): PhoreHttpResponse
+    public $responseHeaders = [];
+    public $responseBody = null;
+
+
+    public function _buildCurlChannel(PhoreHttpRequest $request)
     {
         $req = $request->__get_request_data();
 
@@ -65,8 +65,7 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
             $curlOpt[CURLOPT_USERPWD] = $req["basicAuthUser"] . ":" . $req["basicAuthPass"];
         }
 
-        $responseHeaders = [];
-        $curlOpt[CURLOPT_HEADERFUNCTION] = function ($curl, $headerLine) use (&$responseHeaders) {
+        $curlOpt[CURLOPT_HEADERFUNCTION] = function ($curl, $headerLine)  {
             $len = strlen($headerLine);
             $headerLine = trim($headerLine);
             $headArr = explode(": ", $headerLine, 2);
@@ -74,10 +73,10 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
                 return $len; // Ignore invalid headers[
             $key = trim(strtolower($headArr[0]));
             $value = trim ($headArr[1]);
-            if ( ! isset($responseHeaders[$key])) {
-                $responseHeaders[$key] = [];
+            if ( ! isset($this->responseHeaders[$key])) {
+                $this->responseHeaders[$key] = [];
             }
-            $responseHeaders[$key][] = $value;
+            $this->responseHeaders[$key][] = $value;
             return $len;
         };
         $curlOpt[CURLOPT_RETURNTRANSFER] = true;
@@ -92,6 +91,19 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
         $ch = curl_init();
 
         curl_setopt_array($ch, $curlOpt);
+        return $ch;
+    }
+
+
+    /**
+     * @param PhoreHttpRequest $request
+     * @return PhoreHttpResponse
+     * @throws PhoreHttpRequestException
+     */
+    public function execRequest(PhoreHttpRequest $request): PhoreHttpResponse
+    {
+        $req = $request->__get_request_data();
+        $ch = $this->_buildCurlChannel($request);
 
         $responseBody = curl_exec($ch);
         $http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -100,11 +112,12 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
             $req["streamReaderCallback"]->message(null);
         }
 
-        $response = new PhoreHttpResponse($request, $http_status, $responseHeaders, $responseBody);
         if ($responseBody === false) {
-            throw new PhoreHttpRequestException("Request to '{$url}' failed: " . curl_error($ch), $response, $http_status);
+            throw new PhoreHttpRequestException("Request to '{$req["url"]}' failed: " . curl_error($ch));
         }
-
+        $response = new PhoreHttpResponse($request, $http_status, $this->responseHeaders, $responseBody);
         return $response;
     }
+
+
 }

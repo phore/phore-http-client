@@ -33,6 +33,10 @@ $body = phore_http_request("http://localhost/test.php?case=500")->send(false)->g
 Assert::equal("ABC", $body);
 
 
+$body = phore_http_request("http://localhost/{file}", ["file"=>"test.php"])->send()->getBody();
+//Assert::equal("ABC", $body);
+
+
 Assert::exception(function () {
     $body = phore_http_request("http://localhost/test.php?case=500")->send(true)->getBody();
     Assert::equal("ABC", $body);

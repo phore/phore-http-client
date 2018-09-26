@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/nette/tester.git",
-                "reference": "a65fa39e930204842f48bb44f376e8d9583855bd"
+                "reference": "2b453086d043a31c7312062f9c864753c2153786"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nette/tester/zipball/a65fa39e930204842f48bb44f376e8d9583855bd",
-                "reference": "a65fa39e930204842f48bb44f376e8d9583855bd",
+                "url": "https://api.github.com/repos/nette/tester/zipball/2b453086d043a31c7312062f9c864753c2153786",
+                "reference": "2b453086d043a31c7312062f9c864753c2153786",
                 "shasum": ""
             },
             "require": {
@@ -67,7 +67,7 @@
                 "testing",
                 "unit"
             ],
-            "time": "2018-07-20T12:46:29+00:00"
+            "time": "2018-09-13T00:57:25+00:00"
         }
     ],
     "aliases": [],

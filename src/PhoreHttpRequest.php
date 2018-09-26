@@ -11,6 +11,7 @@ namespace Phore\HttpClient;
 
 use Phore\HttpClient\Driver\PhoreHttp_CurlDriver;
 use Phore\HttpClient\Driver\PhoreHttpDriver;
+use Phore\HttpClient\Ex\PhoreHttpRequestWithBodyException;
 use Phore\HttpClient\Handler\PhoreStreamHandler;
 
 class PhoreHttpRequest
@@ -35,8 +36,28 @@ class PhoreHttpRequest
 
     public function __construct($url, array $params=[])
     {
-        $this->request["url"] = $url;
+        $this->request["url"] = $this->_parseUrl($url, $params);
         $this->driver = new PhoreHttp_CurlDriver();
+    }
+
+    public function getDriver () : PhoreHttp_CurlDriver
+    {
+        return $this->driver;
+    }
+
+
+    private function _parseUrl(string $url, array $params)
+    {
+        $url = preg_replace_callback(
+            "/\{([a-z0-9\_\-\.]+)\}/i",
+            function ($matches) use ($params, $url) {
+                if ( ! isset ($params[$matches[1]]))
+                    throw new \InvalidArgumentException("Parameter: {{$matches[1]}} not found in url '$url'");
+                return urlencode($params[$matches[1]]);
+            },
+            $url
+        );
+        return $url;
     }
 
 
@@ -50,7 +71,9 @@ class PhoreHttpRequest
     public function withUrl($url, array $params=[]) : self
     {
         $new = clone ($this);
+        $url = $this->_parseUrl($url, $params);
         $new->request["url"] = $url;
+
         return $new;
     }
 
@@ -108,14 +131,17 @@ class PhoreHttpRequest
     /**
      * @param bool $throwException
      * @return PhoreHttpResponse
-     * @throws PhoreHttpRequestException
+     * @throws PhoreHttpRequestWithBodyException
      */
     public function send(bool $throwException=true) : PhoreHttpResponse
     {
         $result = $this->driver->execRequest($this);
         if ($result->getHttpStatus() > 400 && $throwException)
-            throw new PhoreHttpRequestException("HttpResponse: Server returned status-code '{$result->getHttpStatus()}'", $result, $result->getHttpStatus());
+            throw new PhoreHttpRequestWithBodyException("HttpResponse: Server returned status-code '{$result->getHttpStatus()}' on '{$this->request["url"]}'", $result, $result->getHttpStatus());
         return $result;
     }
+
+
+
 
 }

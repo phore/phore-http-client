@@ -22,6 +22,18 @@ switch ($_GET["case"]) {
         echo "ABC";
         exit;
 
+    case "wait":
+        $id = uniqid();
+        for($i = 0; $i<10; $i++) {
+            echo "Line.$id\n";
+            sleep(1);
+        }
+        exit;
+
+    case "redir_unlimited":
+        header("Location: test.php?case=redir_unlimited");
+        exit;
+
     case "stream":
         //ob_implicit_flush(true);
         for($i=0; $i<1000; $i++) {
