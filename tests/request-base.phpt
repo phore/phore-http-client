@@ -8,6 +8,7 @@
 
 namespace Test;
 
+use Phore\HttpClient\Ex\PhoreHttpRequestWithBodyException;
 use Phore\HttpClient\Handler\PhoreHttpLineStream;
 use Phore\HttpClient\PhoreHttpRequestException;
 use Tester\Assert;
@@ -40,7 +41,7 @@ $body = phore_http_request("http://localhost/{file}", ["file"=>"test.php"])->sen
 Assert::exception(function () {
     $body = phore_http_request("http://localhost/test.php?case=500")->send(true)->getBody();
     Assert::equal("ABC", $body);
-}, PhoreHttpRequestException::class);
+}, PhoreHttpRequestWithBodyException::class);
 
 
 

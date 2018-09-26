@@ -26,7 +26,7 @@ $queue = new PhoreHttpAsyncQueue();
 
 //$queue->queue(phore_http_request("http://localhost/test.php?case=wait"));
 for ($i=0; $i<200; $i++) {
-    $queue->queue(phore_http_request("http://google.de"))->then(function(PhoreHttpResponse $response) {
+    $queue->queue(phore_http_request("http://localhost"))->then(function(PhoreHttpResponse $response) {
         echo "Done:" . $response->getHttpStatus();
         echo $response->getBody();
     }, function($err) {
