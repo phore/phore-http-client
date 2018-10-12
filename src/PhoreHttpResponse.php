@@ -37,7 +37,7 @@ class PhoreHttpResponse
     {
         $json = json_decode($this->getBody(), true);
         if ($json === null)
-            throw new PhoreHttpRequestException("Response-Body is not in json format: " . json_last_error_msg(), $this);
+            throw new PhoreHttpRequestException("Response-Body is not in json format: " . json_last_error_msg() . "\nBody:\n" . substr($this->getBody(), 0, 8000) . "\n...");
         return $json;
     }
 
