@@ -109,7 +109,7 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
         $responseBody = curl_exec($ch);
         $http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-        curl_close($ch);
+
         if ($req["streamReaderCallback"] !== null) {
             $req["streamReaderCallback"]->message(null);
         }
@@ -117,6 +117,7 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
         if ($responseBody === false) {
             throw new PhoreHttpRequestException("Request to '{$req["url"]}' failed: " . curl_error($ch));
         }
+        curl_close($ch);
         $response = new PhoreHttpResponse($request, $http_status, $this->responseHeaders, $responseBody);
 
         return $response;
