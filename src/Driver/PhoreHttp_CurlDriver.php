@@ -8,8 +8,6 @@
 
 namespace Phore\HttpClient\Driver;
 
-
-use http\Env\Response;
 use Phore\HttpClient\Ex\PhoreHttpRequestException;
 use Phore\HttpClient\PhoreHttpRequest;
 use Phore\HttpClient\PhoreHttpResponse;

@@ -9,6 +9,8 @@
 namespace Phore\HttpClient;
 
 
+use Phore\HttpClient\Ex\PhoreHttpRequestException;
+
 class PhoreHttpResponse
 {
 
