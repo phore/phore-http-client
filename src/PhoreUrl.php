@@ -28,6 +28,12 @@ class PhoreUrl
     }
 
 
+    public function __toString()
+    {
+        return $this->url;
+    }
+
+
     public function withUrl(string $url, array $params=[])
     {
         return new self($url, $params);
