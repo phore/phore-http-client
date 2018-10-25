@@ -11,3 +11,9 @@ function phore_http_request (string $url, array $params = []) : \Phore\HttpClien
 {
     return new \Phore\HttpClient\PhoreHttpRequest($url, $params);
 }
+
+
+function phore_url (string $url=null, array $params = [])
+{
+    return new \Phore\HttpClient\PhoreUrl($url, $params);
+}
