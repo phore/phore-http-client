@@ -48,16 +48,13 @@ class PhoreHttpAsyncQueue
                     curl_multi_remove_handle($this->multiHandle, $data[1]);
                     curl_close($data[1]);
 
-                    $http_status = curl_getinfo($data[1], CURLINFO_HTTP_CODE);
-                    echo "status1 $http_status";
-
                     $ex = new PhoreHttpRequestException($error);
                     $data[2]->reject($ex);
                     $this->requests[$key] = null;
                     continue;
                 }
                 $http_status = curl_getinfo($data[1], CURLINFO_HTTP_CODE);
-                echo "status $http_status";
+
                 if ($http_status > 0 && $http_status < 300 || $http_status >= 400) {
 
                     $strContent = curl_multi_getcontent($data[1]);
@@ -68,7 +65,7 @@ class PhoreHttpAsyncQueue
                     if ($http_status < 300)
                         $data[2]->resolve($response);
                     else
-                        $data[2]->reject(new PhoreHttpRequestWithBodyException("Request returned status code: $http_status:", $response, $http_status), $response);
+                        $data[2]->reject(new PhoreHttpRequestWithBodyException("Request returned status code: $http_status:", $response, $http_status));
                     continue;
                 }
             }
