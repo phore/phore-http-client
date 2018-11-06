@@ -10,6 +10,7 @@ namespace Phore\HttpClient;
 
 
 use Phore\HttpClient\Ex\PhoreHttpRequestException;
+use Phore\HttpClient\Ex\PhoreHttpRequestWithBodyException;
 use Phore\HttpClient\Promise\PhoreHttpPromise;
 
 class PhoreHttpAsyncQueue
@@ -35,6 +36,7 @@ class PhoreHttpAsyncQueue
 
     public function wait()
     {
+
         do {
             curl_multi_exec($this->multiHandle, $running);
             curl_multi_select($this->multiHandle);
@@ -45,19 +47,28 @@ class PhoreHttpAsyncQueue
                     $error = curl_error($data[1]);
                     curl_multi_remove_handle($this->multiHandle, $data[1]);
                     curl_close($data[1]);
+
+                    $http_status = curl_getinfo($data[1], CURLINFO_HTTP_CODE);
+                    echo "status1 $http_status";
+
                     $ex = new PhoreHttpRequestException($error);
                     $data[2]->reject($ex);
                     $this->requests[$key] = null;
                     continue;
                 }
                 $http_status = curl_getinfo($data[1], CURLINFO_HTTP_CODE);
-                if ($http_status > 0 && $http_status < 300 || $http_status > 400) {
+                echo "status $http_status";
+                if ($http_status > 0 && $http_status < 300 || $http_status >= 400) {
+
                     $strContent = curl_multi_getcontent($data[1]);
                     $response = new PhoreHttpResponse($data[0], curl_getinfo($data[1], CURLINFO_HTTP_CODE), $data[0]->getDriver()->responseHeaders, $strContent);
                     curl_multi_remove_handle($this->multiHandle, $data[1]);
                     curl_close($data[1]);
                     $this->requests[$key] = null;
-                    $data[2]->resolve($response);
+                    if ($http_status < 300)
+                        $data[2]->resolve($response);
+                    else
+                        $data[2]->reject(new PhoreHttpRequestWithBodyException("Request returned status code: $http_status:", $response, $http_status), $response);
                     continue;
                 }
             }

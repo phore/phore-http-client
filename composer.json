@@ -24,6 +24,6 @@
   },
   "minimum-stability": "dev",
   "require-dev": {
-    "nette/tester": "^2.1@dev"
+    "phpunit/phpunit": "^7.5@dev"
   }
 }
