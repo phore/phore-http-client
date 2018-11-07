@@ -33,6 +33,10 @@ class PhoreHttpResponse
         return $this->responseBody;
     }
 
+    /**
+     * @return array
+     * @throws PhoreHttpRequestException
+     */
     public function getBodyJson () : array
     {
         $json = json_decode($this->getBody(), true);
