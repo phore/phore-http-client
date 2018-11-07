@@ -9,7 +9,8 @@
 namespace Test;
 
 
-use Phore\HttpClient\Ex\PhoreHttpRequestWithBodyException;
+use Phore\HttpClient\Ex\PhoreHttpRequestException;
+use Phore\HttpClient\PhoreHttpRequest;
 use PHPUnit\Framework\TestCase;
 
 class BasicRequestTest extends TestCase
@@ -35,7 +36,7 @@ class BasicRequestTest extends TestCase
 
     public function testExceptionIsThrownOnStatus500()
     {
-        $this->expectException(PhoreHttpRequestWithBodyException::class);
+        $this->expectException(PhoreHttpRequestException::class);
         $body = phore_http_request("http://localhost/test.php?case=500")->send(true)->getBody();
     }
 

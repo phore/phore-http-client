@@ -9,6 +9,7 @@
 namespace Test;
 
 
+use Phore\HttpClient\Ex\PhoreHttpRequestException;
 use Phore\HttpClient\PhoreHttpAsyncQueue;
 use Phore\HttpClient\PhoreHttpResponse;
 use PHPUnit\Framework\TestCase;
@@ -65,9 +66,11 @@ class RequestPoolingTest extends TestCase
         $queue->queue(phore_http_request("http://localhost/test.php?case=400"))->then(
             function(PhoreHttpResponse $response) use (&$ok) {
                 $ok++;
-            }, function($err) use (&$fail) {
-            $fail++;
-        });
+            },
+            function(PhoreHttpRequestException $err) use (&$fail) {
+                $fail++;
+            }
+            );
 
         $queue->wait();
 

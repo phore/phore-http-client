@@ -65,7 +65,7 @@ class PhoreHttpAsyncQueue
                     if ($http_status < 300) {
                         $data[2]->resolve($response);
                     } else {
-                        $data[2]->reject(new PhoreHttpRequestWithBodyException("Request returned status code: $http_status:", $response, $http_status));
+                        $data[2]->reject(new PhoreHttpRequestException("Request returned status code: $http_status:", $response, $http_status));
                     }
                     continue;
                 }

@@ -11,6 +11,7 @@ namespace Phore\HttpClient;
 
 use Phore\HttpClient\Driver\PhoreHttp_CurlDriver;
 use Phore\HttpClient\Driver\PhoreHttpDriver;
+use Phore\HttpClient\Ex\PhoreHttpRequestException;
 use Phore\HttpClient\Ex\PhoreHttpRequestWithBodyException;
 use Phore\HttpClient\Handler\PhoreStreamHandler;
 
@@ -131,13 +132,13 @@ class PhoreHttpRequest
     /**
      * @param bool $throwException
      * @return PhoreHttpResponse
-     * @throws PhoreHttpRequestWithBodyException
+     * @throws PhoreHttpRequestException
      */
     public function send(bool $throwException=true) : PhoreHttpResponse
     {
         $result = $this->driver->execRequest($this);
         if ($result->getHttpStatus() > 400 && $throwException)
-            throw new PhoreHttpRequestWithBodyException("HttpResponse: Server returned status-code '{$result->getHttpStatus()}' on '{$this->request["url"]}'\nBody:\n" . substr($result->getBody(), 0, 8000) . "\n...", $result, $result->getHttpStatus());
+            throw new PhoreHttpRequestException("HttpResponse: Server returned status-code '{$result->getHttpStatus()}' on '{$this->request["url"]}'\nBody:\n" . substr($result->getBody(), 0, 8000) . "\n...", $result, $result->getHttpStatus());
         return $result;
     }
 
