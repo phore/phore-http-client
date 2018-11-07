@@ -137,7 +137,7 @@ class PhoreHttpRequest
     public function send(bool $throwException=true) : PhoreHttpResponse
     {
         $result = $this->driver->execRequest($this);
-        if ($result->getHttpStatus() > 400 && $throwException)
+        if ($result->getHttpStatus() >= 400 && $throwException)
             throw new PhoreHttpRequestException("HttpResponse: Server returned status-code '{$result->getHttpStatus()}' on '{$this->request["url"]}'\nBody:\n" . substr($result->getBody(), 0, 8000) . "\n...", $result, $result->getHttpStatus());
         return $result;
     }
