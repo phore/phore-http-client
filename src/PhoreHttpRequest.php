@@ -130,14 +130,16 @@ class PhoreHttpRequest
 
 
     /**
-     * @param bool $throwException
+     * @param bool $throwExceptionOnBodyStatusCode
+     * Throws an exception if the body status code is bigger/equals 400
+     * Otherwise only connection errors trigger exceptions
      * @return PhoreHttpResponse
      * @throws PhoreHttpRequestException
      */
-    public function send(bool $throwException=true) : PhoreHttpResponse
+    public function send(bool $throwExceptionOnBodyStatusCode=true) : PhoreHttpResponse
     {
         $result = $this->driver->execRequest($this);
-        if ($result->getHttpStatus() >= 400 && $throwException)
+        if ($result->getHttpStatus() >= 400 && $throwExceptionOnBodyStatusCode)
             throw new PhoreHttpRequestException("HttpResponse: Server returned status-code '{$result->getHttpStatus()}' on '{$this->request["url"]}'\nBody:\n" . substr($result->getBody(), 0, 8000) . "\n...", $result, $result->getHttpStatus());
         return $result;
     }
