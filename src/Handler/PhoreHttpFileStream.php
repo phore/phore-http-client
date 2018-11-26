@@ -34,7 +34,6 @@ class PhoreHttpFileStream implements PhoreStreamHandler
     public function message($data)
     {
         if ($data === null) {
-            $this->fstream->close();
             return;
         }
         $this->fstream->fwrite($data);        
