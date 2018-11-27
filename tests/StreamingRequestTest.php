@@ -27,4 +27,19 @@ class StreamingRequestTest extends TestCase
         $this->assertEquals(106785, strlen($data));
     }
 
+
+    public function testStreamWriter()
+    {
+        $response = phore_http_request("http://localhost/test.php?case=upload")
+            ->withStreamWriter(function ($maxLen) {
+                static $index = 0;
+                $index++;
+                if ($index === 5)
+                    return "";
+                return "$index";
+            })->withMethod("PUT")->send();
+
+        $this->assertEquals("1234", $response->getBody());
+    }
+
 }

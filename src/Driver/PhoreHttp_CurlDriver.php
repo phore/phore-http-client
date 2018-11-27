@@ -51,11 +51,13 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
             $curlOpt[CURLOPT_HTTPHEADER] = $req["headers"];
         }
 
-
         if ($req["method"] == "POST") {
             $curlOpt[CURLOPT_POST] = true;
             if ($req["postBody"] !== null)
                 $curlOpt[CURLOPT_POSTFIELDS] = $req["postBody"];
+        }
+        if ($req["method"] == "PUT") {
+            $curlOpt[CURLOPT_PUT] = true;
         }
 
         if ($req["basicAuthUser"] !== null) {
@@ -86,6 +88,16 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
                 return strlen($data);
             };
         }
+
+        if ($req["streamWriterCallback"] !== null) {
+            if ($req["method"] != "PUT")
+                throw new \InvalidArgumentException("steamWriter is only used on http method 'PUT'!");
+            $curlOpt[CURLOPT_READFUNCTION] = function ($curl, $fp, $maxDataLen) use (&$req) {
+
+                return $req["streamWriterCallback"]($maxDataLen);
+            };
+        }
+
         $ch = curl_init();
 
         curl_setopt_array($ch, $curlOpt);

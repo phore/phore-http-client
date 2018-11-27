@@ -30,6 +30,7 @@ class PhoreHttpRequest
         "queryParams"   => null,
         "postBody"      => null,
         "streamReaderCallback"=> null,
+        "streamWriterCallback"=> null,
         "basicAuthUser" => null,
         "basicAuthPass" => null,
         "headers" => []
@@ -119,6 +120,13 @@ class PhoreHttpRequest
     {
         $new = clone ($this);
         $new->request["streamReaderCallback"] = $fn;
+        return $new;
+    }
+
+    public function withStreamWriter(callable $fn) : self
+    {
+        $new = clone($this);
+        $new->request["streamWriterCallback"] = $fn;
         return $new;
     }
 

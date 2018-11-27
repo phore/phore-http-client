@@ -45,4 +45,9 @@ switch ($_GET["case"]) {
             echo "\n$i" . str_pad("A", 100, "A");
         }
         exit;
+
+    case "upload":
+        //ob_implicit_flush(true);
+        echo file_get_contents("php://input");
+        exit;
 }
