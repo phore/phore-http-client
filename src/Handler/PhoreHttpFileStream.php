@@ -9,12 +9,19 @@
 namespace Phore\HttpClient\Handler;
 
 
+use Phore\FileSystem\FileStream;
+
 class PhoreHttpFileStream implements PhoreStreamHandler
 {
 
-    public function __construct($file)
+    private $fstream = null;
+    
+    public function __construct($file="php://output")
     {
-
+        if ( ! $file instanceof FileStream)
+            $file = phore_file($file)->fopen("w");
+        
+        $this->fstream = $file;
     }
 
 
@@ -26,6 +33,9 @@ class PhoreHttpFileStream implements PhoreStreamHandler
      */
     public function message($data)
     {
-        // TODO: Implement message() method.
+        if ($data === null) {
+            return;
+        }
+        $this->fstream->fwrite($data);        
     }
 }
