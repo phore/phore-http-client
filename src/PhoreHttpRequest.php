@@ -79,6 +79,11 @@ class PhoreHttpRequest
         return $new;
     }
 
+    public function getUrl() : string
+    {
+        return $this->request["url"];
+    }
+    
     public function withQueryParams (array $queryParams=[]) : self
     {
         $new = clone ($this);
