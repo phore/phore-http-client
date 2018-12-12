@@ -33,7 +33,8 @@ class PhoreHttpRequest
         "streamWriterCallback"=> null,
         "basicAuthUser" => null,
         "basicAuthPass" => null,
-        "headers" => []
+        "headers" => [],
+        "meta" => null
     ];
 
     public function __construct($url, array $params=[])
@@ -46,7 +47,7 @@ class PhoreHttpRequest
     {
         return $this->driver;
     }
-
+    
 
     private function _parseUrl(string $url, array $params)
     {
@@ -70,6 +71,18 @@ class PhoreHttpRequest
         return $new;
     }
 
+    public function withMeta($metaData) : self
+    {
+        $new = clone($this);
+        $new->request["meta"] = $metaData;
+        return $new;
+    }
+    
+    public function getMeta() 
+    {
+        return $this->request["meta"];
+    }
+    
     public function withUrl($url, array $params=[]) : self
     {
         $new = clone ($this);
