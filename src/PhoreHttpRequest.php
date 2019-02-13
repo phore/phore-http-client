@@ -104,11 +104,18 @@ class PhoreHttpRequest
         return $new;
     }
 
-    public function withPostData (string $postData) : self
+    /**
+     * @param $postData string|array|object
+     * @return PhoreHttpRequest
+     */
+    public function withPostData ($postData) : self
     {
         $new = clone ($this);
         if ($new->request["method"] === "GET")
             $new->request["method"] = "POST";
+        if (is_array($postData) || is_object($postData)) {
+            $postData = json_encode($postData);
+        }
         $new->request["postBody"] = $postData;
         return $new;
     }
