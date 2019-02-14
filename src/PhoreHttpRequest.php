@@ -108,7 +108,7 @@ class PhoreHttpRequest
      * @param $postData string|array|object
      * @return PhoreHttpRequest
      */
-    public function withPostData ($postData) : self
+    public function withPostData ($postData="") : self
     {
         $new = clone ($this);
         if ($new->request["method"] === "GET")
