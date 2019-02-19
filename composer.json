@@ -24,6 +24,8 @@
   },
   "minimum-stability": "dev",
   "require-dev": {
-    "phpunit/phpunit": "*"
+    "phpunit/phpunit": "*",
+    "phore/cache": "*",
+    "phore/objectstore": "*"
   }
 }

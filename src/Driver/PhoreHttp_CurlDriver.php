@@ -53,11 +53,15 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
 
         if ($req["method"] == "POST") {
             $curlOpt[CURLOPT_POST] = true;
-            if ($req["postBody"] !== null)
-                $curlOpt[CURLOPT_POSTFIELDS] = $req["postBody"];
         }
         if ($req["method"] == "PUT") {
             $curlOpt[CURLOPT_PUT] = true;
+        }
+        if ($req["method"] == "DELETE") {
+            $curlOpt[CURLOPT_CUSTOMREQUEST] = "DELETE";
+        }
+        if ($req["postBody"] !== null) {
+            $curlOpt[CURLOPT_POSTFIELDS] = $req["postBody"];
         }
 
         if ($req["basicAuthUser"] !== null) {

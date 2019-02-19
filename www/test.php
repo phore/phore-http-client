@@ -46,6 +46,10 @@ switch ($_GET["case"]) {
         }
         exit;
 
+    case "dump":
+        echo json_encode($_SERVER);
+        exit;
+
     case "upload":
         //ob_implicit_flush(true);
         echo file_get_contents("php://input");

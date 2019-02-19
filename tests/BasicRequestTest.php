@@ -34,6 +34,16 @@ class BasicRequestTest extends TestCase
     }
 
 
+
+    public function testDeleteRequest()
+    {
+        $result = phore_http_request("http://localhost/test.php?case=dump")->withMethod("DELETE")->send()->getBodyJson();
+
+        $this->assertEquals("DELETE", $result["REQUEST_METHOD"]);
+
+    }
+
+
     public function testExceptionIsThrownOnStatus500()
     {
         $this->expectException(PhoreHttpRequestException::class);
