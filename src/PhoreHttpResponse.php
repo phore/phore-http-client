@@ -86,4 +86,9 @@ class PhoreHttpResponse
     }
 
 
+    public function getRequest() : PhoreHttpRequest
+    {
+        return $this->request;
+    }
+    
 }

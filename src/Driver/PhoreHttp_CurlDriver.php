@@ -42,7 +42,7 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
             } else {
                 $url .= "&";
             }
-            $url .= http_build_str($req["queryParams"]);
+            $url .= \http_build_query($req["queryParams"]);
         }
         $curlOpt[CURLOPT_URL] = $url;
 

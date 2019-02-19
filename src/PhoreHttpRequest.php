@@ -33,7 +33,8 @@ class PhoreHttpRequest
         "streamWriterCallback"=> null,
         "basicAuthUser" => null,
         "basicAuthPass" => null,
-        "headers" => []
+        "headers" => [],
+        "meta" => null
     ];
 
     public function __construct($url, array $params=[])
@@ -46,7 +47,7 @@ class PhoreHttpRequest
     {
         return $this->driver;
     }
-
+    
 
     private function _parseUrl(string $url, array $params)
     {
@@ -70,6 +71,18 @@ class PhoreHttpRequest
         return $new;
     }
 
+    public function withMeta($metaData) : self
+    {
+        $new = clone($this);
+        $new->request["meta"] = $metaData;
+        return $new;
+    }
+    
+    public function getMeta() 
+    {
+        return $this->request["meta"];
+    }
+    
     public function withUrl($url, array $params=[]) : self
     {
         $new = clone ($this);
@@ -79,6 +92,11 @@ class PhoreHttpRequest
         return $new;
     }
 
+    public function getUrl() : string
+    {
+        return $this->request["url"];
+    }
+    
     public function withQueryParams (array $queryParams=[]) : self
     {
         $new = clone ($this);
@@ -86,11 +104,18 @@ class PhoreHttpRequest
         return $new;
     }
 
-    public function withPostData (string $postData) : self
+    /**
+     * @param $postData string|array|object
+     * @return PhoreHttpRequest
+     */
+    public function withPostData ($postData="") : self
     {
         $new = clone ($this);
         if ($new->request["method"] === "GET")
             $new->request["method"] = "POST";
+        if (is_array($postData) || is_object($postData)) {
+            $postData = json_encode($postData);
+        }
         $new->request["postBody"] = $postData;
         return $new;
     }
