@@ -87,6 +87,10 @@ class PhoreHttpResponse
         return $this->httpStatus;
     }
 
+    public function isFailed() : bool 
+    {
+        return ($this->getHttpStatus() >= 400 || $this->getHttpStatus() < 200);
+    }
 
     public function getRequest() : PhoreHttpRequest
     {
