@@ -10,6 +10,7 @@
   ],
   "require": {
     "php": ">=7.1",
+    "phore/core": "dev-master",
     "ext-curl": "*",
     "ext-http": "*",
     "ext-json": "*"
