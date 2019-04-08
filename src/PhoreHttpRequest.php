@@ -23,6 +23,10 @@ class PhoreHttpRequest
      */
     private $driver;
 
+    /**
+     * @var self
+     */
+    private static $lastRequest = null;
 
     protected $request = [
         "method"    => "GET",
@@ -161,6 +165,13 @@ class PhoreHttpRequest
         return $this->withHeaders(["Authorization" => "Bearer $oauth2Token"]);
     }
 
+    
+    public static function GetLastRequest() : ?self 
+    {
+        return self::$lastRequest;
+    }
+    
+    
 
     /**
      * @param bool $throwExceptionOnBodyStatusCode
@@ -171,6 +182,7 @@ class PhoreHttpRequest
      */
     public function send(bool $throwExceptionOnBodyStatusCode=true) : PhoreHttpResponse
     {
+        self::$lastRequest = $this;
         $result = $this->driver->execRequest($this);
         if ($result->getHttpStatus() >= 400 && $throwExceptionOnBodyStatusCode)
             throw new PhoreHttpRequestException("HttpResponse: Server returned status-code '{$result->getHttpStatus()}' on '{$this->request["url"]}'\nBody:\n" . substr($result->getBody(), 0, 8000) . "\n...", $result, $result->getHttpStatus());
