@@ -35,15 +35,8 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
 
         $curlOpt = $this->curlOpt;
 
-        $url =  $req["url"];
-        if ($req["queryParams"] !== null) {
-            if (strpos($url, "?") === false) {
-                $url .= "?";
-            } else {
-                $url .= "&";
-            }
-            $url .= \http_build_query($req["queryParams"]);
-        }
+        $url =  $request->getUrl();
+        
         $curlOpt[CURLOPT_URL] = $url;
 
 
