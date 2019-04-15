@@ -29,6 +29,14 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
     public $responseBody = null;
 
 
+    public function __construct()
+    {
+        if ( ! function_exists("curl_init")) {
+            throw new \Exception("PHP extension 'curl' missing. Install php-curl to use this driver.");
+        }
+    }
+
+
     public function _buildCurlChannel(PhoreHttpRequest $request)
     {
         $req = $request->__get_request_data();
