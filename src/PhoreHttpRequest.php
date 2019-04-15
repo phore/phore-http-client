@@ -23,6 +23,11 @@ class PhoreHttpRequest
      */
     private $driver;
 
+    /**
+     * @var self
+     */
+    private static $lastRequest = null;
+    private static $lastResponse = null;
 
     protected $request = [
         "method"    => "GET",
@@ -92,9 +97,24 @@ class PhoreHttpRequest
         return $new;
     }
 
+    /**
+     * Return the full request url (including queryParameters)
+     * 
+     * @return string
+     */
     public function getUrl() : string
     {
-        return $this->request["url"];
+        $url = $this->request["url"];
+        if ($this->request["queryParams"] !== null) {
+            if (strpos($url, "?") === false) {
+                $url .= "?";
+            } else {
+                $url .= "&";
+            }
+            $url .= \http_build_query($this->request["queryParams"]);
+        }
+        
+        return $url;
     }
     
     public function withQueryParams (array $queryParams=[]) : self
@@ -139,6 +159,7 @@ class PhoreHttpRequest
     {
         return $this->request;
     }
+  
 
 
     public function withStreamReader(PhoreStreamHandler $fn) : self
@@ -161,6 +182,16 @@ class PhoreHttpRequest
         return $this->withHeaders(["Authorization" => "Bearer $oauth2Token"]);
     }
 
+    
+    public static function GetLastRequest() : ?self 
+    {
+        return self::$lastRequest;
+    }
+    
+    public static function GetLastResponse() : ?PhoreHttpResponse
+    {
+        return self::$lastResponse;
+    }
 
     /**
      * @param bool $throwExceptionOnBodyStatusCode
@@ -171,7 +202,9 @@ class PhoreHttpRequest
      */
     public function send(bool $throwExceptionOnBodyStatusCode=true) : PhoreHttpResponse
     {
+        self::$lastRequest = $this;
         $result = $this->driver->execRequest($this);
+        self::$lastResponse = $result;
         if ($result->getHttpStatus() >= 400 && $throwExceptionOnBodyStatusCode)
             throw new PhoreHttpRequestException("HttpResponse: Server returned status-code '{$result->getHttpStatus()}' on '{$this->request["url"]}'\nBody:\n" . substr($result->getBody(), 0, 8000) . "\n...", $result, $result->getHttpStatus());
         return $result;
