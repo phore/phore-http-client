@@ -9,14 +9,26 @@
 namespace Test;
 
 
+use Phore\Cache\Cache;
+use Phore\ObjectStore\Driver\FileSystemObjectStoreDriver;
+use Phore\ObjectStore\ObjectStore;
 use PHPUnit\Framework\TestCase;
 
 class CachedRequestTest extends TestCase
 {
 
 
-    public function testNoop()
+    public function testBasicGetCaching()
     {
+        system("rm -R /tmp/cache1");
+        $cache = new Cache(new ObjectStore(new FileSystemObjectStoreDriver("/tmp/cache1")));
+
+        $ret = phore_http_request("http://localhost/test.php?case=200")->withCache($cache)->send();
+        $this->assertEquals(false, $ret->isFromCache());
+
+        $ret = phore_http_request("http://localhost/test.php?case=200")->withCache($cache)->send();
+        $this->assertEquals(true, $ret->isFromCache());
+
         $this->assertEquals(true, true);
     }
 

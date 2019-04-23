@@ -876,12 +876,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "7602ff48472ed4f4a0d37348e37e39ade3fee5cf"
+                "reference": "45e92883d7818bb7fb351cefea873d65e48fc275"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/7602ff48472ed4f4a0d37348e37e39ade3fee5cf",
-                "reference": "7602ff48472ed4f4a0d37348e37e39ade3fee5cf",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/45e92883d7818bb7fb351cefea873d65e48fc275",
+                "reference": "45e92883d7818bb7fb351cefea873d65e48fc275",
                 "shasum": ""
             },
             "require": {
@@ -950,7 +950,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2019-04-15T07:12:41+00:00"
+            "time": "2019-04-23T08:34:08+00:00"
         },
         {
             "name": "psr/http-message",

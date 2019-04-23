@@ -8,6 +8,7 @@
 
 namespace Phore\HttpClient\Driver;
 
+use Phore\Cache\Cache;
 use Phore\HttpClient\Ex\PhoreHttpRequestException;
 use Phore\HttpClient\PhoreHttpRequest;
 use Phore\HttpClient\PhoreHttpResponse;
@@ -25,9 +26,9 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
     ];
 
 
+
     public $responseHeaders = [];
     public $responseBody = null;
-
 
     public function __construct()
     {
@@ -37,7 +38,7 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
     }
 
 
-    public function _buildCurlChannel(PhoreHttpRequest $request)
+    public function _buildCurlChannel(PhoreHttpRequest $request, &$cacheKey)
     {
         $req = $request->__get_request_data();
 
@@ -52,23 +53,32 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
             $curlOpt[CURLOPT_HTTPHEADER] = $req["headers"];
         }
 
+        $cacheKey = $url;
         if ($req["method"] == "POST") {
             $curlOpt[CURLOPT_POST] = true;
+            $cacheKey .= "_POST";
         }
         if ($req["method"] == "PUT") {
             $curlOpt[CURLOPT_PUT] = true;
+            $cacheKey .= "_PUT";
         }
         if ($req["method"] == "DELETE") {
             $curlOpt[CURLOPT_CUSTOMREQUEST] = "DELETE";
+            $cacheKey .= "DELETE";
         }
         if ($req["postBody"] !== null) {
             $curlOpt[CURLOPT_POSTFIELDS] = $req["postBody"];
+            $cacheKey .= sha1($req["postBody"]);
         }
 
         if ($req["basicAuthUser"] !== null) {
             $curlOpt[CURLOPT_HTTPAUTH] = CURLAUTH_BASIC;
             $curlOpt[CURLOPT_USERPWD] = $req["basicAuthUser"] . ":" . $req["basicAuthPass"];
+            $cacheKey .= sha1($req["basicAuthUser"] . ":" . $req["basicAuthPass"]);
         }
+
+
+
 
         $curlOpt[CURLOPT_HEADERFUNCTION] = function ($curl, $headerLine)  {
             $len = strlen($headerLine);
@@ -119,10 +129,22 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
     public function execRequest(PhoreHttpRequest $request): PhoreHttpResponse
     {
         $req = $request->__get_request_data();
-        $ch = $this->_buildCurlChannel($request);
+        $cache = $req["_cache"];
 
-        $responseBody = curl_exec($ch);
-        $http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $ch = $this->_buildCurlChannel($request, $cacheKey);
+
+        if ($cache instanceof Cache && $cache->has($cacheKey)) {
+            [$responseBody, $this->responseHeaders, $http_status] = $cache->get($cacheKey);
+            if ($req["streamReaderCallback"] !== null) {
+                $req["streamReaderCallback"]->message($responseBody);
+                $req["streamReaderCallback"]->message(null);
+            }
+            curl_close($ch);
+            return new PhoreHttpResponse($request, $http_status, $this->responseHeaders, $responseBody, ["from_cache" => true]);
+        } else {
+            $responseBody = curl_exec($ch);
+            $http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        }
 
 
         if ($req["streamReaderCallback"] !== null) {
@@ -133,10 +155,12 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
             throw new PhoreHttpRequestException("Request to '{$req["url"]}' failed: " . curl_error($ch));
         }
         curl_close($ch);
-        $response = new PhoreHttpResponse($request, $http_status, $this->responseHeaders, $responseBody);
+        if ($cache instanceof Cache) {
+            $cache->set($cacheKey, [$responseBody, $this->responseHeaders, $http_status]);
+        }
+        $response = new PhoreHttpResponse($request, $http_status, $this->responseHeaders, $responseBody, ["from_cache" => false]);
 
         return $response;
     }
-
 
 }

@@ -23,6 +23,9 @@
       "src/functions.php"
     ]
   },
+  "suggest": {
+    "phore/cache": "Use request caching"
+  },
   "minimum-stability": "dev",
   "require-dev": {
     "phpunit/phpunit": "*",

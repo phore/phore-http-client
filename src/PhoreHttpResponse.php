@@ -18,19 +18,26 @@ class PhoreHttpResponse
     private $httpStatus;
     private $responseHeaders;
     private $responseBody;
+    private $opts;
 
-    public function __construct(PhoreHttpRequest $request, int $httpStatus, array $responseHeaders, string $responseBody)
+    public function __construct(PhoreHttpRequest $request, int $httpStatus, array $responseHeaders, string $responseBody, array $opts=[])
     {
         $this->request = $request;
         $this->httpStatus = $httpStatus;
         $this->responseHeaders = $responseHeaders;
         $this->responseBody = $responseBody;
+        $this->opts = $opts;
     }
 
 
     public function getBody() : string
     {
         return $this->responseBody;
+    }
+
+    public function isFromCache() : bool
+    {
+        return $this->opts["from_cache"];
     }
 
     /**

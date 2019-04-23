@@ -32,7 +32,7 @@ class PhoreHttpAsyncQueue
     public function queue(PhoreHttpRequest $request) : PhoreHttpPromise
     {
         $promise = new PhoreHttpPromise();
-        $this->requests[] = [$request, $ch = $request->getDriver()->_buildCurlChannel($request), $promise];
+        $this->requests[] = [$request, $ch = $request->getDriver()->_buildCurlChannel($request, $cacheKey), $promise];
         curl_multi_add_handle($this->multiHandle, $ch);
         return $promise;
     }

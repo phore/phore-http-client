@@ -9,6 +9,7 @@
 namespace Phore\HttpClient;
 
 
+use Phore\Cache\Cache;
 use Phore\HttpClient\Driver\PhoreHttp_CurlDriver;
 use Phore\HttpClient\Driver\PhoreHttpDriver;
 use Phore\HttpClient\Ex\PhoreHttpRequestException;
@@ -39,7 +40,8 @@ class PhoreHttpRequest
         "basicAuthUser" => null,
         "basicAuthPass" => null,
         "headers" => [],
-        "meta" => null
+        "meta" => null,
+        "_cache" => null
     ];
 
     public function __construct($url, array $params=[])
@@ -68,6 +70,12 @@ class PhoreHttpRequest
         return $url;
     }
 
+    public function withCache(Cache $cache) : self
+    {
+        $new = clone ($this);
+        $new->request["_cache"] = $cache;
+        return $new;
+    }
 
     public function withMethod(string $method) : self
     {
