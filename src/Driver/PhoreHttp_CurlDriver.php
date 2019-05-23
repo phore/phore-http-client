@@ -48,11 +48,6 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
         
         $curlOpt[CURLOPT_URL] = $url;
 
-
-        if (count($req["headers"]) > 0) {
-            $curlOpt[CURLOPT_HTTPHEADER] = $req["headers"];
-        }
-
         $cacheKey = $url;
         if ($req["method"] == "POST") {
             $curlOpt[CURLOPT_POST] = true;
@@ -116,6 +111,19 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
         $ch = curl_init();
 
         curl_setopt_array($ch, $curlOpt);
+
+        $headers = [];
+        foreach ($req["headers"] as $key => $val) {
+            if ( ! is_int($key)) {
+                $headers[] = "$key: $val";
+            } else {
+                $headers[] = $val;
+            }
+        }
+
+        if (count ($headers) > 0) {
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        }
 
         return $ch;
     }
