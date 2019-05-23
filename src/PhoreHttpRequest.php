@@ -136,7 +136,7 @@ class PhoreHttpRequest
      * @param $postData string|array|object
      * @return PhoreHttpRequest
      */
-    public function withPostData ($postData="") : self
+    public function withPostBody($postBody = "") : self 
     {
         $new = clone ($this);
         if ($new->request["method"] === "GET")
@@ -146,6 +146,35 @@ class PhoreHttpRequest
         }
         $new->request["postBody"] = $postData;
         return $new;
+    }
+
+    /**
+     * Send data x-www-form-urlencoded
+     * 
+     * @param array $formData
+     * @return PhoreHttpRequest
+     */
+    public function withPostFormBody(array $formData) : self
+    {
+        $new = clone ($this);
+        if ($new->request["method"] === "GET")
+            $new->request["method"] = "POST";
+
+        $new->request["headers"]["Content-Type"] = "application/x-www-form-urlencoded";
+
+        $new->request["postBody"] = http_build_query($formData);
+        return $new;
+    }
+
+    /**
+     * @deprecated use withPostBody() or withPostFormData()
+     * @param string $postData
+     * @return PhoreHttpRequest
+     *
+     */
+    public function withPostData ($postData="") : self
+    {
+        return $this->withPostBody($postData);
     }
 
     public function withHeaders(array $headers = []) : self
