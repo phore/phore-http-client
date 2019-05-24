@@ -2,6 +2,7 @@
   "name": "phore/http-client",
   "description": "Http client library for fast api access",
   "keywords": ["Keyword1", "Keyword2"],
+  "homepage": "https://infracamp.org/phore/",
   "license": "MIT",
   "authors": [
     { "name": "Matthias Leuffen", "email": "m@tth.es" }
