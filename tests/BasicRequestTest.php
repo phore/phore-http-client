@@ -44,6 +44,13 @@ class BasicRequestTest extends TestCase
     }
 
 
+    public function testPostRequest()
+    {
+        $result = phore_http_request("http://localhost/test?case=dump")->withPostBody(["abc"=>"abc"])->send()->getBodyJson();
+        $this->assertEquals(1, 1);
+    }
+
+
     public function testExceptionIsThrownOnStatus500()
     {
         $this->expectException(PhoreHttpRequestException::class);

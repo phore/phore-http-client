@@ -141,10 +141,10 @@ class PhoreHttpRequest
         $new = clone ($this);
         if ($new->request["method"] === "GET")
             $new->request["method"] = "POST";
-        if (is_array($postData) || is_object($postData)) {
-            $postData = phore_json_encode($postData);
+        if (is_array($postBody) || is_object($postBody)) {
+            $postBody = phore_json_encode($postBody);
         }
-        $new->request["postBody"] = $postData;
+        $new->request["postBody"] = $postBody;
         return $new;
     }
 

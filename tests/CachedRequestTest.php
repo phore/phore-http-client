@@ -21,6 +21,7 @@ class CachedRequestTest extends TestCase
     public function testBasicCaching()
     {
         system("rm -R /tmp/cache1");
+        mkdir ("/tmp/cache1");
         $cache = new Cache(new ObjectStore(new FileSystemObjectStoreDriver("/tmp/cache1")));
 
         $ret = phore_http_request("http://localhost/test.php?case=200")->withCache($cache)->send();
