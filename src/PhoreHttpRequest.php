@@ -144,6 +144,7 @@ class PhoreHttpRequest
         if (is_array($postBody) || is_object($postBody)) {
             $postBody = phore_json_encode($postBody);
         }
+        $new->request["headers"]["Content-Type"] = "application/json";
         $new->request["postBody"] = $postBody;
         return $new;
     }
