@@ -243,8 +243,17 @@ class PhoreHttpRequest
         self::$lastRequest = $this;
         $result = $this->driver->execRequest($this);
         self::$lastResponse = $result;
-        if ($result->getHttpStatus() >= 400 && $throwExceptionOnBodyStatusCode)
-            throw new PhoreHttpRequestException("HttpResponse: Server returned status-code '{$result->getHttpStatus()}' on '{$this->request["url"]}'\nBody:\n" . substr($result->getBody(), 0, 8000) . "\n...", $result, $result->getHttpStatus());
+        if ($result->getHttpStatus() >= 400 && $throwExceptionOnBodyStatusCode) {
+            $body = $result->getBody();
+            if (strlen($body) === 0) {
+                $body = "(empty body)";
+            } elseif (strlen($body) < 8000) {
+                $body = "'" . $body . "'"; // full body output
+            } else {
+                $body = "'". substr($body, 0, 8000) . "\n...'";
+            }
+            throw new PhoreHttpRequestException("HttpResponse: Server returned status-code '{$result->getHttpStatus()}' on '{$this->request["url"]}'\nBody:\n" . $body, $result, $result->getHttpStatus());
+        }
         return $result;
     }
 
