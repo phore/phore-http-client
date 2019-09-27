@@ -21,7 +21,7 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
         CURLOPT_SAFE_UPLOAD => true,                // Allow only CurlFile for fileUploads
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_MAXREDIRS => 3,
-        CURLOPT_CONNECTTIMEOUT => 10,
+        CURLOPT_CONNECTTIMEOUT_MS => 10 * 1000,
         CURLOPT_TCP_FASTOPEN => true
     ];
 
@@ -56,6 +56,12 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
         if ($req["method"] == "PUT") {
             $curlOpt[CURLOPT_PUT] = true;
             $cacheKey .= "_PUT";
+        }
+        if ($req["timeout"] !== null) {
+            $curlOpt[CURLOPT_TIMEOUT_MS] = (int)($request["timeout"] * 1000);
+        }
+        if ($req["timeout_connect"] !== null) {
+            $curlOpt[CURLOPT_CONNECTTIMEOUT_MS] = (int)($request["timeout_connect"] * 1000);
         }
         if ($req["method"] == "DELETE") {
             $curlOpt[CURLOPT_CUSTOMREQUEST] = "DELETE";

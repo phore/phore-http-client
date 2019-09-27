@@ -39,6 +39,8 @@ class PhoreHttpRequest
         "streamWriterCallback"=> null,
         "basicAuthUser" => null,
         "basicAuthPass" => null,
+        "timeout_connect" => null,
+        "timeout" => null,
         "headers" => [],
         "meta" => null,
         "_cache" => null
@@ -124,7 +126,22 @@ class PhoreHttpRequest
         
         return $url;
     }
-    
+
+    /**
+     * Set timeouts in seconds
+     *
+     * @param float|null $connect
+     * @param float|null $timeout
+     * @return PhoreHttpRequest
+     */
+    public function withTimeout(float $connect=null, float $timeout=null) : self
+    {
+        $new = clone ($this);
+        $new->request["timeout_connect"] = $connect;
+        $new->request["timeout"] = $timeout;
+        return $new;
+    }
+
     public function withQueryParams (array $queryParams=[]) : self
     {
         $new = clone ($this);
