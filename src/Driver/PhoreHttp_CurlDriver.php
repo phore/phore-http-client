@@ -58,10 +58,10 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
             $cacheKey .= "_PUT";
         }
         if ($req["timeout"] !== null) {
-            $curlOpt[CURLOPT_TIMEOUT_MS] = (int)($request["timeout"] * 1000);
+            $curlOpt[CURLOPT_TIMEOUT_MS] = (int)($req["timeout"] * 1000);
         }
         if ($req["timeout_connect"] !== null) {
-            $curlOpt[CURLOPT_CONNECTTIMEOUT_MS] = (int)($request["timeout_connect"] * 1000);
+            $curlOpt[CURLOPT_CONNECTTIMEOUT_MS] = (int)($req["timeout_connect"] * 1000);
         }
         if ($req["method"] == "DELETE") {
             $curlOpt[CURLOPT_CUSTOMREQUEST] = "DELETE";
