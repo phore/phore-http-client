@@ -199,13 +199,6 @@ class PhoreHttpRequest
     {
         $new = clone ($this);
         $new->request["headers"] = array_merge($new->request["headers"], $headers);
-        if(array_key_exists("Content-Type", $new->request["headers"])){
-            foreach ($headers as $header) {
-                if(startsWith($header, "Content-Type:")){
-                    $new->request["headers"]["Content-Type"] = substr($header, 12);
-                }
-            }
-        }
         return $new;
     }
 
