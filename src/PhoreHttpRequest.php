@@ -198,6 +198,7 @@ class PhoreHttpRequest
     public function withHeaders(array $headers = []) : self
     {
         $new = clone ($this);
+        $new->request["headers"] = array_merge($new->request["headers"], $headers);
         if(array_key_exists("Content-Type", $new->request["headers"])){
             foreach ($headers as $header) {
                 if(startsWith($header, "Content-Type:")){
@@ -205,7 +206,6 @@ class PhoreHttpRequest
                 }
             }
         }
-        $new->request["headers"] = array_merge($new->request["headers"], $headers);
         return $new;
     }
 
