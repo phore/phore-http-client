@@ -54,4 +54,15 @@ switch ($_GET["case"]) {
         //ob_implicit_flush(true);
         echo file_get_contents("php://input");
         exit;
+
+    case "multiLineOutputWithFlush":
+        ob_implicit_flush(1);
+        ob_end_clean();
+        for ($i = 0; $i<2; $i++) {
+            echo "Line $i\n";
+            usleep (10000);
+            flush();
+
+        }
+        exit;
 }

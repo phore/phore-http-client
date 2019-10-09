@@ -41,6 +41,25 @@ class RequestPoolingTest extends TestCase
     }
 
 
+    public function testMultiLineOutputWithFlush ()
+    {
+        $queue = new PhoreHttpAsyncQueue();
+
+        //$queue->queue(phore_http_request("http://localhost/test.php?case=wait"));
+
+
+        for ($i=0; $i<2; $i++) {
+            $queue->queue(phore_http_request("http://localhost/test.php?case=multiLineOutputWithFlush"))->then(
+                function(PhoreHttpResponse $response) use (&$data) {
+                    $data = $response->getBody();
+                });
+        }
+
+        $queue->wait();
+        $this->assertEquals("Line 0\nLine 1\n", $data);
+    }
+
+
     public function testPoolingTriggersErrorHandlerOn500 ()
     {
         $queue = new PhoreHttpAsyncQueue();
@@ -54,7 +73,7 @@ class RequestPoolingTest extends TestCase
                 });
 
         $queue->wait();
-
+        $this->assertEquals(0, $ok);
         $this->assertEquals(1, $fail);
     }
 
@@ -73,7 +92,7 @@ class RequestPoolingTest extends TestCase
             );
 
         $queue->wait();
-
+        $this->assertEquals(0, $ok);
         $this->assertEquals(1, $fail);
     }
 

@@ -55,28 +55,44 @@ class PhoreHttpAsyncQueue
         do {
             curl_multi_exec($this->multiHandle, $running);
             curl_multi_select($this->multiHandle);
-            
+            $infoRead = curl_multi_info_read($this->multiHandle);
+
             foreach ($this->requests as $key => $data) {
                 if ($data === null)
                     continue;
-                if (curl_error($data[1]) !== '') {
-                    $error = curl_error($data[1]);
+
+                if ($infoRead["handle"] !== $data[1])
+                    continue; // Not my channel
+
+                if ($infoRead["result"] !== CURLE_OK) {
+                    $msg = [
+                        CURLE_UNSUPPORTED_PROTOCOL => "Unsupported Protocol",
+                        CURLE_FAILED_INIT => "Failed Init",
+                        CURLE_URL_MALFORMAT => "Url Malformat",
+                        CURLE_URL_MALFORMAT_USER => "Url Malformat User",
+                        CURLE_COULDNT_RESOLVE_PROXY => "Coudnt Resolve Proxy",
+                        CURLE_COULDNT_RESOLVE_HOST => "Couldnt Resolve Host",
+                        CURLE_COULDNT_CONNECT => "Coldnt Connect",
+                        CURLE_HTTP_NOT_FOUND => "Http Not Found",
+                    ];
                     curl_multi_remove_handle($this->multiHandle, $data[1]);
                     curl_close($data[1]);
 
-                    $ex = new PhoreHttpRequestException($error);
+                    $error = $msg[$infoRead["result"]] ?? "Curle_error: {$infoRead["result"]}";
+
+                    $ex = new PhoreHttpRequestException("Connection error: $error (Request: '" . $data[0]->getUrl() . "')");
                     if ($this->onErrorCb !== null)
                         ($this->onErrorCb)($ex);
                     $data[2]->reject($ex);
                     $this->requests[$key] = null;
                     continue;
                 }
-                $http_status = curl_getinfo($data[1], CURLINFO_HTTP_CODE);
 
-                if ($http_status > 0 && $http_status < 300 || $http_status >= 400) {
+                $http_status = curl_getinfo($data[1], CURLINFO_RESPONSE_CODE);;
+                if ($infoRead["result"] === CURLE_OK && $http_status > 0 && $http_status < 300 || $http_status >= 400) {
 
                     $strContent = curl_multi_getcontent($data[1]);
-                    $response = new PhoreHttpResponse($data[0], curl_getinfo($data[1], CURLINFO_HTTP_CODE), $data[0]->getDriver()->responseHeaders, $strContent);
+                    $response = new PhoreHttpResponse($data[0], curl_getinfo($data[1], CURLINFO_RESPONSE_CODE), $data[0]->getDriver()->responseHeaders, $strContent);
                     curl_multi_remove_handle($this->multiHandle, $data[1]);
                     curl_close($data[1]);
                     $this->requests[$key] = null;
