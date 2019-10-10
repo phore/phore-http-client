@@ -22,3 +22,4 @@ if ($req->isFromCache() === true)
     echo "From Cache: " . $req->getBody();
 ```
 
+Examples:
