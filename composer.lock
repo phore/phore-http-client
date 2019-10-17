@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phore/phore-core.git",
-                "reference": "d24a50595f52f6f2488c829bd621ba30da86699c"
+                "reference": "bcbdca3b7fd327c517ada157ce846807ac6e34b4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phore/phore-core/zipball/d24a50595f52f6f2488c829bd621ba30da86699c",
-                "reference": "d24a50595f52f6f2488c829bd621ba30da86699c",
+                "url": "https://api.github.com/repos/phore/phore-core/zipball/bcbdca3b7fd327c517ada157ce846807ac6e34b4",
+                "reference": "bcbdca3b7fd327c517ada157ce846807ac6e34b4",
                 "shasum": ""
             },
             "require": {
@@ -54,8 +54,8 @@
                 }
             ],
             "description": "Phore core library",
-            "homepage": "https://infracamp.org/phore/",
-            "time": "2019-10-02T21:54:25+00:00"
+            "homepage": "https://infracamp.org/project/phore",
+            "time": "2019-10-15T23:46:50+00:00"
         }
     ],
     "packages-dev": [
@@ -65,12 +65,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/instantiator.git",
-                "reference": "7c71fc2932158d00f24f10635bf3b3b8b6ee5b68"
+                "reference": "67dbbd519b584fdfb9f8d028912eb404ab411f8a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/7c71fc2932158d00f24f10635bf3b3b8b6ee5b68",
-                "reference": "7c71fc2932158d00f24f10635bf3b3b8b6ee5b68",
+                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/67dbbd519b584fdfb9f8d028912eb404ab411f8a",
+                "reference": "67dbbd519b584fdfb9f8d028912eb404ab411f8a",
                 "shasum": ""
             },
             "require": {
@@ -113,7 +113,7 @@
                 "constructor",
                 "instantiate"
             ],
-            "time": "2019-07-02T13:37:32+00:00"
+            "time": "2019-10-14T11:56:32+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -169,12 +169,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phar-io/manifest.git",
-                "reference": "8c8bd1bb1a22f311b1b4886662b989d0d02aab77"
+                "reference": "6008a32fa23816a6ac71889c80da7d58c056c2bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phar-io/manifest/zipball/8c8bd1bb1a22f311b1b4886662b989d0d02aab77",
-                "reference": "8c8bd1bb1a22f311b1b4886662b989d0d02aab77",
+                "url": "https://api.github.com/repos/phar-io/manifest/zipball/6008a32fa23816a6ac71889c80da7d58c056c2bb",
+                "reference": "6008a32fa23816a6ac71889c80da7d58c056c2bb",
                 "shasum": ""
             },
             "require": {
@@ -220,7 +220,7 @@
                 }
             ],
             "description": "Component for reading phar.io manifest information from a PHP Archive (PHAR)",
-            "time": "2019-07-09T12:18:04+00:00"
+            "time": "2019-10-11T06:20:36+00:00"
         },
         {
             "name": "phar-io/version",
@@ -327,12 +327,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phore/phore-filesystem.git",
-                "reference": "b5c031eb357d553fb3460e59de5bef6a33188558"
+                "reference": "5f75dc858b225bb2b9ea902b19995c79b26b3583"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phore/phore-filesystem/zipball/b5c031eb357d553fb3460e59de5bef6a33188558",
-                "reference": "b5c031eb357d553fb3460e59de5bef6a33188558",
+                "url": "https://api.github.com/repos/phore/phore-filesystem/zipball/5f75dc858b225bb2b9ea902b19995c79b26b3583",
+                "reference": "5f75dc858b225bb2b9ea902b19995c79b26b3583",
                 "shasum": ""
             },
             "require": {
@@ -365,7 +365,8 @@
                 }
             ],
             "description": "Acces files layer",
-            "time": "2019-09-26T10:09:57+00:00"
+            "homepage": "http://infracamp.org/project/phore",
+            "time": "2019-10-15T23:47:27+00:00"
         },
         {
             "name": "phore/objectstore",
@@ -882,12 +883,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "cba1d157d7338e06e9e7b7d08f0dede7f79d16ca"
+                "reference": "a07d6ce5d21ecdfe7edeedaf5efb3be85c4f2046"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/cba1d157d7338e06e9e7b7d08f0dede7f79d16ca",
-                "reference": "cba1d157d7338e06e9e7b7d08f0dede7f79d16ca",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/a07d6ce5d21ecdfe7edeedaf5efb3be85c4f2046",
+                "reference": "a07d6ce5d21ecdfe7edeedaf5efb3be85c4f2046",
                 "shasum": ""
             },
             "require": {
@@ -957,7 +958,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2019-10-08T04:47:53+00:00"
+            "time": "2019-10-15T08:26:12+00:00"
         },
         {
             "name": "psr/http-message",

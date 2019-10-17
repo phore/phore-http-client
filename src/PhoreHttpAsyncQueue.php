@@ -54,7 +54,7 @@ class PhoreHttpAsyncQueue
         $noRun = 0;
         do {
             curl_multi_exec($this->multiHandle, $running);
-            curl_multi_select($this->multiHandle);
+            //curl_multi_select($this->multiHandle);
             $infoRead = curl_multi_info_read($this->multiHandle);
 
             foreach ($this->requests as $key => $data) {

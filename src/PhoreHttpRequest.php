@@ -216,7 +216,6 @@ class PhoreHttpRequest
     }
   
 
-
     public function withStreamReader(PhoreStreamHandler $fn) : self
     {
         $new = clone ($this);
