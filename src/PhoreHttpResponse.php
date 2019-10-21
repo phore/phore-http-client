@@ -66,13 +66,18 @@ class PhoreHttpResponse
         return $this->responseHeaders[strtolower($name)][0];
     }
 
+    public function getHeaders (): array
+    {
+        return $this->responseHeaders;
+    }
+
     public function getCookies () : array
     {
         $cookies = $this->responseHeaders['set-cookie'];
         $ret = [];
         foreach ($cookies as $cookie) {
             preg_match("/([^;\s]+)=([^;\s]+)/", $cookie, $matches);
-            $ret[$matches[1]] = $matches[2];
+            $ret[$matches[1]][] = $matches[2];
         }
         return $ret;
     }
