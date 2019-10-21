@@ -66,6 +66,17 @@ class PhoreHttpResponse
         return $this->responseHeaders[strtolower($name)][0];
     }
 
+    public function getCookies () : array
+    {
+        $cookies = $this->responseHeaders['set-cookie'];
+        $ret = [];
+        foreach ($cookies as $cookie) {
+            preg_match("/([^;\s]+)=([^;\s]+)/", $cookie, $matches);
+            $ret[$matches[1]] = $matches[2];
+        }
+        return $ret;
+    }
+
 
     public function getContentType() : string
     {
@@ -94,7 +105,7 @@ class PhoreHttpResponse
         return $this->httpStatus;
     }
 
-    public function isFailed() : bool 
+    public function isFailed() : bool
     {
         return ($this->getHttpStatus() >= 400 || $this->getHttpStatus() < 200);
     }
@@ -103,5 +114,5 @@ class PhoreHttpResponse
     {
         return $this->request;
     }
-    
+
 }
