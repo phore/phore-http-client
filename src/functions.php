@@ -7,9 +7,9 @@
  */
 
 
-function phore_http_request (string $url, array $params = []) : \Phore\HttpClient\PhoreHttpRequest
+function phore_http_request (string $url, array $params = [], array $curlOptions = []) : \Phore\HttpClient\PhoreHttpRequest
 {
-    return new \Phore\HttpClient\PhoreHttpRequest($url, $params);
+    return new \Phore\HttpClient\PhoreHttpRequest($url, $params, $curlOptions);
 }
 
 
