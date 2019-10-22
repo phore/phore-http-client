@@ -65,12 +65,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/instantiator.git",
-                "reference": "67dbbd519b584fdfb9f8d028912eb404ab411f8a"
+                "reference": "ae466f726242e637cebdd526a7d991b9433bacf1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/67dbbd519b584fdfb9f8d028912eb404ab411f8a",
-                "reference": "67dbbd519b584fdfb9f8d028912eb404ab411f8a",
+                "url": "https://api.github.com/repos/doctrine/instantiator/zipball/ae466f726242e637cebdd526a7d991b9433bacf1",
+                "reference": "ae466f726242e637cebdd526a7d991b9433bacf1",
                 "shasum": ""
             },
             "require": {
@@ -113,7 +113,7 @@
                 "constructor",
                 "instantiate"
             ],
-            "time": "2019-10-14T11:56:32+00:00"
+            "time": "2019-10-21T16:45:58+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -883,12 +883,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "a07d6ce5d21ecdfe7edeedaf5efb3be85c4f2046"
+                "reference": "4a5367636d1df3b3727ba7d1d226dbdfc5ce5fa0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/a07d6ce5d21ecdfe7edeedaf5efb3be85c4f2046",
-                "reference": "a07d6ce5d21ecdfe7edeedaf5efb3be85c4f2046",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/4a5367636d1df3b3727ba7d1d226dbdfc5ce5fa0",
+                "reference": "4a5367636d1df3b3727ba7d1d226dbdfc5ce5fa0",
                 "shasum": ""
             },
             "require": {
@@ -958,7 +958,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2019-10-15T08:26:12+00:00"
+            "time": "2019-10-21T20:30:48+00:00"
         },
         {
             "name": "psr/http-message",
