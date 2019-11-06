@@ -29,6 +29,7 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
 
     public $responseHeaders = [];
     public $responseBody = null;
+    public $curlInfoLastResponse = [];
 
     public function __construct(array $options = [])
     {
@@ -161,6 +162,7 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
         } else {
             $responseBody = curl_exec($ch);
             $http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            $this->curlInfoLastResponse = curl_getinfo($ch);
         }
 
 
