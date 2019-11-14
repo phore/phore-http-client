@@ -10,6 +10,7 @@ namespace Test;
 
 
 use Phore\HttpClient\Ex\PhoreHttpRequestException;
+use Phore\HttpClient\Handler\PhoreHttpFileStream;
 use Phore\HttpClient\PhoreHttpAsyncQueue;
 use Phore\HttpClient\PhoreHttpResponse;
 use PHPUnit\Framework\TestCase;
@@ -94,6 +95,25 @@ class RequestPoolingTest extends TestCase
         $queue->wait();
         $this->assertEquals(0, $ok);
         $this->assertEquals(1, $fail);
+    }
+
+    public function testPoolingWithStreamReader()
+    {
+        $queue = new PhoreHttpAsyncQueue();
+
+        $tempFile = phore_tempfile();
+        $streamHandler = new PhoreHttpFileStream($tempFile);
+        $queue->queue(phore_http_request("http://localhost/test.php?case=200")->withStreamReader($streamHandler))
+            ->then(
+            function(PhoreHttpResponse $response) {
+               // trying to get the response body should fail here
+            }, function($err){
+
+            }
+        );
+        $queue->wait();
+
+        $this->assertEquals("ABC",$tempFile->get_contents());
     }
 
 }

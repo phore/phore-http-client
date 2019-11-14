@@ -9,6 +9,7 @@
 namespace Phore\HttpClient;
 
 
+use http\Exception\InvalidArgumentException;
 use Phore\HttpClient\Ex\PhoreHttpRequestException;
 
 class PhoreHttpResponse
@@ -20,7 +21,7 @@ class PhoreHttpResponse
     private $responseBody;
     private $opts;
 
-    public function __construct(PhoreHttpRequest $request, int $httpStatus, array $responseHeaders, string $responseBody, array $opts=[])
+    public function __construct(PhoreHttpRequest $request, int $httpStatus, array $responseHeaders, string $responseBody = null, array $opts=[])
     {
         $this->request = $request;
         $this->httpStatus = $httpStatus;
@@ -32,6 +33,9 @@ class PhoreHttpResponse
 
     public function getBody() : string
     {
+        if($this->responseBody === null) {
+            throw new InvalidArgumentException("No response body available: Possible reason: are you using stream reader?");
+        }
         return $this->responseBody;
     }
 
