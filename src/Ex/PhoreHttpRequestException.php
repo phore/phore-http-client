@@ -30,7 +30,7 @@ class PhoreHttpRequestException extends \Exception
     }
 
 
-    public function getResponse() : PhoreHttpResponse
+    public function getResponse() : ?PhoreHttpResponse
     {
         return $this->response;
     }

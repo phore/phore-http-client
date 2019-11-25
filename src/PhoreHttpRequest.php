@@ -46,26 +46,26 @@ class PhoreHttpRequest
         "_cache" => null
     ];
 
-    public function __construct($url, array $params=[])
+    public function __construct($url, array $urlParams=[], array $curlOpt=[])
     {
-        $this->request["url"] = $this->_parseUrl($url, $params);
-        $this->driver = new PhoreHttp_CurlDriver();
+        $this->request["url"] = $this->_parseUrl($url, $urlParams);
+        $this->driver = new PhoreHttp_CurlDriver($curlOpt);
     }
 
     public function getDriver () : PhoreHttp_CurlDriver
     {
         return $this->driver;
     }
-    
 
-    private function _parseUrl(string $url, array $params)
+
+    private function _parseUrl(string $url, array $urlParams)
     {
         $url = preg_replace_callback(
             "/\{([a-z0-9\_\-\.]+)\}/i",
-            function ($matches) use ($params, $url) {
-                if ( ! isset ($params[$matches[1]]))
+            function ($matches) use ($urlParams, $url) {
+                if ( ! isset ($urlParams[$matches[1]]))
                     throw new \InvalidArgumentException("Parameter: {{$matches[1]}} not found in url '$url'");
-                return urlencode($params[$matches[1]]);
+                return urlencode($urlParams[$matches[1]]);
             },
             $url
         );
@@ -92,16 +92,16 @@ class PhoreHttpRequest
         $new->request["meta"] = $metaData;
         return $new;
     }
-    
-    public function getMeta() 
+
+    public function getMeta()
     {
         return $this->request["meta"];
     }
-    
-    public function withUrl($url, array $params=[]) : self
+
+    public function withUrl($url, array $urlParams=[]) : self
     {
         $new = clone ($this);
-        $url = $this->_parseUrl($url, $params);
+        $url = $this->_parseUrl($url, $urlParams);
         $new->request["url"] = $url;
 
         return $new;
@@ -109,7 +109,7 @@ class PhoreHttpRequest
 
     /**
      * Return the full request url (including queryParameters)
-     * 
+     *
      * @return string
      */
     public function getUrl() : string
@@ -123,7 +123,7 @@ class PhoreHttpRequest
             }
             $url .= \http_build_query($this->request["queryParams"]);
         }
-        
+
         return $url;
     }
 
@@ -153,7 +153,7 @@ class PhoreHttpRequest
      * @param $postData string|array|object
      * @return PhoreHttpRequest
      */
-    public function withPostBody($postBody = "") : self 
+    public function withPostBody($postBody = "") : self
     {
         $new = clone ($this);
         if ($new->request["method"] === "GET")
@@ -168,7 +168,7 @@ class PhoreHttpRequest
 
     /**
      * Send data x-www-form-urlencoded
-     * 
+     *
      * @param array $formData
      * @return PhoreHttpRequest
      */
@@ -214,7 +214,6 @@ class PhoreHttpRequest
     {
         return $this->request;
     }
-  
 
 
     public function withStreamReader(PhoreStreamHandler $fn) : self
@@ -237,12 +236,12 @@ class PhoreHttpRequest
         return $this->withHeaders(["Authorization" => "Bearer $oauth2Token"]);
     }
 
-    
-    public static function GetLastRequest() : ?self 
+
+    public static function GetLastRequest() : ?self
     {
         return self::$lastRequest;
     }
-    
+
     public static function GetLastResponse() : ?PhoreHttpResponse
     {
         return self::$lastResponse;

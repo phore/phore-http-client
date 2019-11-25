@@ -9,6 +9,7 @@
 namespace Phore\HttpClient;
 
 
+use http\Exception\InvalidArgumentException;
 use Phore\HttpClient\Ex\PhoreHttpRequestException;
 
 class PhoreHttpResponse
@@ -20,7 +21,7 @@ class PhoreHttpResponse
     private $responseBody;
     private $opts;
 
-    public function __construct(PhoreHttpRequest $request, int $httpStatus, array $responseHeaders, string $responseBody, array $opts=[])
+    public function __construct(PhoreHttpRequest $request, int $httpStatus, array $responseHeaders, string $responseBody = null, array $opts=[])
     {
         $this->request = $request;
         $this->httpStatus = $httpStatus;
@@ -32,6 +33,9 @@ class PhoreHttpResponse
 
     public function getBody() : string
     {
+        if($this->responseBody === null) {
+            throw new InvalidArgumentException("No response body available: Possible reason: are you using stream reader?");
+        }
         return $this->responseBody;
     }
 
@@ -66,6 +70,22 @@ class PhoreHttpResponse
         return $this->responseHeaders[strtolower($name)][0];
     }
 
+    public function getHeaders (): array
+    {
+        return $this->responseHeaders;
+    }
+
+    public function getCookies () : array
+    {
+        $cookies = $this->responseHeaders['set-cookie'];
+        $ret = [];
+        foreach ($cookies as $cookie) {
+            preg_match("/([^;\s]+)=([^;\s]+)/", $cookie, $matches);
+            $ret[$matches[1]][] = $matches[2];
+        }
+        return $ret;
+    }
+
 
     public function getContentType() : string
     {
@@ -94,7 +114,7 @@ class PhoreHttpResponse
         return $this->httpStatus;
     }
 
-    public function isFailed() : bool 
+    public function isFailed() : bool
     {
         return ($this->getHttpStatus() >= 400 || $this->getHttpStatus() < 200);
     }
@@ -103,5 +123,5 @@ class PhoreHttpResponse
     {
         return $this->request;
     }
-    
+
 }

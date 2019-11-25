@@ -29,12 +29,16 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
 
     public $responseHeaders = [];
     public $responseBody = null;
+    public $curlInfoLastResponse = [];
 
-    public function __construct()
+    public function __construct(array $options = [])
     {
         if ( ! function_exists("curl_init")) {
             throw new \Exception("PHP extension 'curl' missing. Install php-curl to use this driver.");
         }
+
+        $this->curlOpt = $options + $this->curlOpt;
+
     }
 
 
@@ -45,7 +49,7 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
         $curlOpt = $this->curlOpt;
 
         $url =  $request->getUrl();
-        
+
         $curlOpt[CURLOPT_URL] = $url;
 
         $cacheKey = $url;
@@ -158,6 +162,7 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
         } else {
             $responseBody = curl_exec($ch);
             $http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            $this->curlInfoLastResponse = curl_getinfo($ch);
         }
 
 
