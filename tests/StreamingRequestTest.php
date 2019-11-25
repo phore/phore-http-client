@@ -42,4 +42,10 @@ class StreamingRequestTest extends TestCase
         $this->assertEquals("1234", $response->getBody());
     }
 
+
+    public function testStreamRespooling()
+    {
+
+    }
+
 }

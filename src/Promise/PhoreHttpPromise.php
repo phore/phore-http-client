@@ -29,16 +29,13 @@ class PhoreHttpPromise
 
     public function resolve($value)
     {
-        try {
-            if ($this->success !== null)
-                $return = ($this->success)($value);
-            if ($return instanceof PhoreHttpPromise)
 
-            if ($this->next !== null)
-                $this->next->resolve($return);
-        } catch (\Exception $e) {
-            $this->next->reject($e);
-        }
+        if ($this->success !== null)
+            $return = ($this->success)($value);
+
+        if ($this->next !== null)
+            $this->next->resolve($return);
+
     }
 
     public function reject($reason)
