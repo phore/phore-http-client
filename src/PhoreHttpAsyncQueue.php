@@ -101,7 +101,14 @@ class PhoreHttpAsyncQueue
                             ($this->onSuccessCb)($response);
                         $data[2]->resolve($response);
                     } else {
-                        $ex = new PhoreHttpRequestException("Request returned status code: $http_status:", $response, $http_status);
+                        if (strlen($strContent) === 0) {
+                            $body = "(empty body)";
+                        } elseif (strlen($strContent) < 8000) {
+                            $body = "'" . $strContent . "'"; // full body output
+                        } else {
+                            $body = "'". substr($strContent, 0, 8000) . "\n...'";
+                        }
+                        $ex =  new PhoreHttpRequestException("HttpResponse: Server returned status-code '{$http_status}' on '{$response->getRequest()->getUrl()}'\nBody:\n" . $body, $response, $response->getHttpStatus());
                         if ($this->onErrorCb !== null)
                             ($this->onErrorCb)($ex);
                         $data[2]->reject($ex);

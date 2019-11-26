@@ -327,12 +327,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phore/phore-filesystem.git",
-                "reference": "78c2c0e9de1366a8691ebaf4c17e255573234d25"
+                "reference": "9710832fee21b420605f5c72d5c0654f9b7f2b2a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phore/phore-filesystem/zipball/78c2c0e9de1366a8691ebaf4c17e255573234d25",
-                "reference": "78c2c0e9de1366a8691ebaf4c17e255573234d25",
+                "url": "https://api.github.com/repos/phore/phore-filesystem/zipball/9710832fee21b420605f5c72d5c0654f9b7f2b2a",
+                "reference": "9710832fee21b420605f5c72d5c0654f9b7f2b2a",
                 "shasum": ""
             },
             "require": {
@@ -366,7 +366,7 @@
             ],
             "description": "Acces files layer",
             "homepage": "http://infracamp.org/project/phore",
-            "time": "2019-11-25T15:54:31+00:00"
+            "time": "2019-11-25T18:37:25+00:00"
         },
         {
             "name": "phore/objectstore",
