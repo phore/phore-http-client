@@ -1,5 +1,7 @@
 # Phore http-client
 
+[![Actions Status](https://github.com/phore/phore-http-client/workflows/tests/badge.svg)](https://github.com/phore/phore-http-client/actions)
+
 Easy to use http-client with fluent api.
 
 ## Example
