@@ -51,11 +51,14 @@ class PhoreHttpAsyncQueue
     public function wait()
     {
         $noRun = 0;
+
         do {
+
             curl_multi_exec($this->multiHandle, $running);
             //curl_multi_select($this->multiHandle);
             $infoRead = curl_multi_info_read($this->multiHandle);
 
+            //echo "\nRunning $running " . print_r($infoRead, true);
             foreach ($this->requests as $key => $data) {
                 if ($data === null)
                     continue;
@@ -115,13 +118,18 @@ class PhoreHttpAsyncQueue
                     continue;
                 }
             }
-            if ($running == 0) {
-                $noRun++;
-            } else {
-                $noRun = 0;
+
+            $reqLeft = 0;
+            foreach ($this->requests as $key => $value) {
+                if ($value !== null) {
+                    $reqLeft++;
+                    break;
+                }
             }
+
+            usleep(100);
             // Wait until next run returned null as well (for requeueing)
-        } while ($noRun < 2);
+        } while ($reqLeft > 0);
     }
 
 }
