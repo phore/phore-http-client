@@ -106,6 +106,8 @@ class RequestPoolingTest extends TestCase
         $queue->queue(phore_http_request("http://localhost/test.php?case=200")->withStreamReader($streamHandler))
             ->then(
             function(PhoreHttpResponse $response) {
+                $this->assertEquals("text/plain;charset=UTF-8", $response->getHeader("Content-Type"));
+
                // trying to get the response body should fail here
             }, function($err){
 
@@ -114,6 +116,24 @@ class RequestPoolingTest extends TestCase
         $queue->wait();
 
         $this->assertEquals("ABC",$tempFile->get_contents());
+    }
+
+
+    public function testStreamReaderResultMustNotHaveBody()
+    {
+        $queue = new PhoreHttpAsyncQueue();
+
+        $this->expectException(\InvalidArgumentException::class);
+
+        $tempFile = phore_tempfile();
+        $streamHandler = new PhoreHttpFileStream($tempFile);
+        $queue->queue(phore_http_request("http://localhost/test.php?case=200")->withStreamReader($streamHandler))
+            ->then(
+            function(PhoreHttpResponse $response) {
+                $response->getBody(); // <- should fail
+            }
+        );
+        $queue->wait();
     }
 
 }

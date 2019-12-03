@@ -31,6 +31,7 @@
   "require-dev": {
     "phpunit/phpunit": "*",
     "phore/cache": "*",
+    "phore/filesystem": "*",
     "phore/objectstore": "*"
   }
 }

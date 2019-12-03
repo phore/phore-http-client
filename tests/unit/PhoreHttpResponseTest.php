@@ -12,7 +12,7 @@ class PhoreHttpResponseTest extends TestCase
         $request = new PhoreHttpRequest("http://localhost/test");
         $response = new PhoreHttpResponse($request, 1, [], null);
 
-        $this->expectException(\http\Exception\InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage("No response body available");
         $response->getBody();
     }

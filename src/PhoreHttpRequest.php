@@ -13,7 +13,6 @@ use Phore\Cache\Cache;
 use Phore\HttpClient\Driver\PhoreHttp_CurlDriver;
 use Phore\HttpClient\Driver\PhoreHttpDriver;
 use Phore\HttpClient\Ex\PhoreHttpRequestException;
-use Phore\HttpClient\Ex\PhoreHttpRequestWithBodyException;
 use Phore\HttpClient\Handler\PhoreStreamHandler;
 
 class PhoreHttpRequest

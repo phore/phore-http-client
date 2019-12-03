@@ -10,7 +10,6 @@ namespace Phore\HttpClient;
 
 
 use Phore\HttpClient\Ex\PhoreHttpRequestException;
-use Phore\HttpClient\Ex\PhoreHttpRequestWithBodyException;
 use Phore\HttpClient\Promise\PhoreHttpPromise;
 
 class PhoreHttpAsyncQueue

@@ -9,7 +9,7 @@
 namespace Phore\HttpClient;
 
 
-use http\Exception\InvalidArgumentException;
+use \InvalidArgumentException;
 use Phore\HttpClient\Ex\PhoreHttpRequestException;
 
 class PhoreHttpResponse

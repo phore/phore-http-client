@@ -39,8 +39,12 @@ class StreamingRequestTest extends TestCase
                 return "$index";
             })->withMethod("PUT")->send();
 
+        $this->assertEquals("text/html; charset=UTF-8", $response->getHeader("Content-Type"));
         $this->assertEquals("1234", $response->getBody());
     }
+
+
+
 
 
     public function testStreamRespooling()
