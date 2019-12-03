@@ -36,8 +36,8 @@ class RequestPoolingTest extends TestCase
         }
 
         $queue->wait();
-        $this->assertEquals(20, $ok);
         $this->assertEquals(0, $fail);
+        $this->assertEquals(20, $ok);
 
     }
 
