@@ -57,6 +57,7 @@ class PhoreHttpAsyncQueue
             curl_multi_exec($this->multiHandle, $running);
             //curl_multi_select($this->multiHandle); // Slower than just usleep()
             $infoRead = curl_multi_info_read($this->multiHandle);
+            usleep(100);
 
             //echo "\nRunning $running " . print_r($infoRead, true);
             foreach ($this->requests as $key => $data) {
@@ -127,7 +128,7 @@ class PhoreHttpAsyncQueue
                 }
             }
 
-            usleep(100);
+
             // Wait until next run returned null as well (for requeueing)
         } while ($reqLeft > 0);
     }
