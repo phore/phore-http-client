@@ -11,7 +11,7 @@
   ],
   "require": {
     "php": ">=7.1",
-    "phore/core": "dev-master",
+    "phore/core": "*",
     "ext-curl": "*",
     "ext-http": "*",
     "ext-json": "*"
@@ -31,7 +31,6 @@
   "require-dev": {
     "phpunit/phpunit": "*",
     "phore/cache": "*",
-    "phore/filesystem": "*",
-    "phore/objectstore": "*"
+    "phore/filesystem": "*"
   }
 }
