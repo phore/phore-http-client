@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "71baea9e64b279da7e8601a4c75a4465",
+    "content-hash": "06a26160da846858f63120ffeb894e0a",
     "packages": [
         {
             "name": "phore/core",
@@ -377,24 +377,27 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phore/phore-objectstore.git",
-                "reference": "047e5d2f5778d53d9063c6a13824f10d193e428f"
+                "reference": "11cab91ec170039c4d9efcf06c401f54dcb8aa47"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phore/phore-objectstore/zipball/047e5d2f5778d53d9063c6a13824f10d193e428f",
-                "reference": "047e5d2f5778d53d9063c6a13824f10d193e428f",
+                "url": "https://api.github.com/repos/phore/phore-objectstore/zipball/11cab91ec170039c4d9efcf06c401f54dcb8aa47",
+                "reference": "11cab91ec170039c4d9efcf06c401f54dcb8aa47",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
+                "ext-openssl": "*",
                 "ext-yaml": "*",
-                "phore/core": "dev-master",
-                "php": ">=7.1"
+                "phore/core": "*",
+                "phore/http-client": "*",
+                "php": ">=7.1",
+                "phpunit/phpunit": "8.5.x-dev"
             },
             "require-dev": {
-                "google/cloud-storage": "dev-master",
+                "google/cloud-storage": "*",
                 "nette/tester": "^2.1@dev",
-                "phore/filesystem": "dev-master"
+                "phore/filesystem": "*"
             },
             "suggest": {
                 "google/cloud-storage": "If using Google Cloud services",
@@ -418,7 +421,7 @@
                 }
             ],
             "description": "Object store for local files, google, aws",
-            "time": "2019-05-08T14:41:10+00:00"
+            "time": "2019-12-04T11:39:21+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
@@ -1823,9 +1826,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "phore/core": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

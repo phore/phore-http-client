@@ -55,9 +55,9 @@ class PhoreHttpAsyncQueue
         do {
 
             curl_multi_exec($this->multiHandle, $running);
-            //curl_multi_select($this->multiHandle); // Slower than just usleep()
+            curl_multi_select($this->multiHandle); // Slower than just usleep()
             $infoRead = curl_multi_info_read($this->multiHandle);
-            usleep(100);
+            usleep(1000);
 
             //echo "\nRunning $running " . print_r($infoRead, true);
             foreach ($this->requests as $key => $data) {
@@ -73,21 +73,23 @@ class PhoreHttpAsyncQueue
                         CURLE_FAILED_INIT => "Failed Init",
                         CURLE_URL_MALFORMAT => "Url Malformat",
                         CURLE_URL_MALFORMAT_USER => "Url Malformat User",
-                        CURLE_COULDNT_RESOLVE_PROXY => "Coudnt Resolve Proxy",
-                        CURLE_COULDNT_RESOLVE_HOST => "Couldnt Resolve Host",
-                        CURLE_COULDNT_CONNECT => "Coldnt Connect",
+                        CURLE_COULDNT_RESOLVE_PROXY => "Could not Resolve Proxy",
+                        CURLE_COULDNT_RESOLVE_HOST => "Could not Resolve Host",
+                        CURLE_COULDNT_CONNECT => "Could not Connect",
                         CURLE_HTTP_NOT_FOUND => "Http Not Found",
+                        CURLE_OPERATION_TIMEDOUT => "Operation timed out",
+                        CURLE_OUT_OF_MEMORY => "Out of memory"
                     ];
                     curl_multi_remove_handle($this->multiHandle, $data[1]);
                     curl_close($data[1]);
-
+                    unset($this->requests[$key]);
                     $error = $msg[$infoRead["result"]] ?? "Curle_error: {$infoRead["result"]}";
 
                     $ex = new PhoreHttpRequestException("Connection error: $error (Request: '" . $data[0]->getUrl() . "')");
                     if ($this->onErrorCb !== null)
                         ($this->onErrorCb)($ex);
                     $data[2]->reject($ex);
-                    $this->requests[$key] = null;
+                    usleep(100);
                     continue;
                 }
 
@@ -98,7 +100,8 @@ class PhoreHttpAsyncQueue
                     $response = new PhoreHttpResponse($data[0], curl_getinfo($data[1], CURLINFO_RESPONSE_CODE), $data[0]->getDriver()->responseHeaders, $strContent);
                     curl_multi_remove_handle($this->multiHandle, $data[1]);
                     curl_close($data[1]);
-                    $this->requests[$key] = null;
+                    unset($this->requests[$key]);
+
                     if ($http_status < 300) {
                          if ($this->onSuccessCb !== null)
                             ($this->onSuccessCb)($response);
@@ -116,21 +119,14 @@ class PhoreHttpAsyncQueue
                             ($this->onErrorCb)($ex);
                         $data[2]->reject($ex);
                     }
-                    continue;
-                }
-            }
 
-            $reqLeft = 0;
-            foreach ($this->requests as $key => $value) {
-                if ($value !== null) {
-                    $reqLeft++;
-                    break;
+                    continue;
                 }
             }
 
 
             // Wait until next run returned null as well (for requeueing)
-        } while ($reqLeft > 0);
+        } while (count($this->requests) > 0);
     }
 
 }

@@ -18,22 +18,26 @@ $queue = new PhoreHttpAsyncQueue();
 
         //$queue->queue(phore_http_request("http://localhost/test.php?case=wait"));
 
+phore_out("Start");
+
 $err = 0;
 $ok = 0;
-for ($i=0; $i<100; $i++) {
-    $queue->queue(phore_http_request("http://localhost/test.php?case=multiLineOutputWithFlush"))->then(
+for ($i=0; $i<200; $i++) {
+    $queue->queue(phore_http_request("https://ulan./")->withTimeout(2,10))->then(
         function(PhoreHttpResponse $response) use (&$data, &$ok)  {
-            echo "OK$ok:" . $response->getBody();
+            phore_out("OK$ok:");
             $ok++;
 
         },
         function (PhoreHttpRequestException $ex) use (&$err){
-            echo "ERR$err:" . $ex->getMessage();
+            phore_out("ERR$err:" . $ex->getMessage());
             $err++;
         });
 }
 
 $queue->wait();
+
+phore_out("stop");
 
 echo "\nOK: $ok Err: $err\n";
 echo $data;
