@@ -78,7 +78,8 @@ class PhoreHttpAsyncQueue
                         CURLE_COULDNT_CONNECT => "Could not Connect",
                         CURLE_HTTP_NOT_FOUND => "Http Not Found",
                         CURLE_OPERATION_TIMEDOUT => "Operation timed out",
-                        CURLE_OUT_OF_MEMORY => "Out of memory"
+                        CURLE_OUT_OF_MEMORY => "Out of memory",
+                        CURLE_SSL_CONNECT_ERROR => "SSL Connect Error"
                     ];
                     curl_multi_remove_handle($this->multiHandle, $data[1]);
                     curl_close($data[1]);
