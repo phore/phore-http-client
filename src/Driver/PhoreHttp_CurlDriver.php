@@ -41,6 +41,7 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
 
     }
 
+    
 
     public function _buildCurlChannel(PhoreHttpRequest $request, &$cacheKey)
     {
@@ -139,6 +140,9 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
     }
 
 
+    
+    
+    
     /**
      * @param PhoreHttpRequest $request
      * @return PhoreHttpResponse
