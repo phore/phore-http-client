@@ -171,7 +171,7 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
         }
 
         if ($responseBody === false) {
-            throw new PhoreHttpRequestException("Request to '{$req["url"]}' failed: " . curl_error($ch));
+            throw new PhoreHttpRequestException("Request to '{$req["url"]}' failed: " . curl_error($ch) .", " . curl_errno($ch));
         }
         curl_close($ch);
         if ($cache instanceof Cache) {

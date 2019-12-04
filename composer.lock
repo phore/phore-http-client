@@ -377,19 +377,22 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phore/phore-objectstore.git",
-                "reference": "047e5d2f5778d53d9063c6a13824f10d193e428f"
+                "reference": "39e8a1041742aa1111aa7c0e48e21b8e686937d5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phore/phore-objectstore/zipball/047e5d2f5778d53d9063c6a13824f10d193e428f",
-                "reference": "047e5d2f5778d53d9063c6a13824f10d193e428f",
+                "url": "https://api.github.com/repos/phore/phore-objectstore/zipball/39e8a1041742aa1111aa7c0e48e21b8e686937d5",
+                "reference": "39e8a1041742aa1111aa7c0e48e21b8e686937d5",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
+                "ext-openssl": "*",
                 "ext-yaml": "*",
                 "phore/core": "dev-master",
-                "php": ">=7.1"
+                "phore/http-client": "dev-master",
+                "php": ">=7.1",
+                "phpunit/phpunit": "8.5.x-dev"
             },
             "require-dev": {
                 "google/cloud-storage": "dev-master",
@@ -418,7 +421,7 @@
                 }
             ],
             "description": "Object store for local files, google, aws",
-            "time": "2019-05-08T14:41:10+00:00"
+            "time": "2019-12-04T10:04:50+00:00"
         },
         {
             "name": "phpdocumentor/reflection-common",
