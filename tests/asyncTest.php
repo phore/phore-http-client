@@ -14,7 +14,7 @@ use Phore\HttpClient\PhoreHttpResponse;
 
 require __DIR__ . "/../vendor/autoload.php";
 
-$queue = new PhoreHttpAsyncQueue();
+
 
         //$queue->queue(phore_http_request("http://localhost/test.php?case=wait"));
 
@@ -22,22 +22,25 @@ phore_out("Start");
 
 $err = 0;
 $ok = 0;
-for ($i=0; $i<200; $i++) {
-    $queue->queue(phore_http_request("https://ulan./")->withTimeout(2,10))->then(
-        function(PhoreHttpResponse $response) use (&$data, &$ok)  {
-            phore_out("OK$ok:");
-            $ok++;
+while (1) {
+    $queue = new PhoreHttpAsyncQueue();
+    for ($i = 0; $i < 200; $i++) {
 
-        },
-        function (PhoreHttpRequestException $ex) use (&$err){
-            phore_out("ERR$err:" . $ex->getMessage());
-            $err++;
-        });
+        $queue->queue(phore_http_request("http://localhost/")->withTimeout(2, 10))->then(
+            function (PhoreHttpResponse $response) use (&$data, &$ok) {
+                phore_out("OK$ok:");
+                $ok++;
+
+            },
+            function (PhoreHttpRequestException $ex) use (&$err) {
+                phore_out("ERR$err:" . $ex->getMessage());
+                $err++;
+            });
+    }
+
+    $queue->wait();
+
+    phore_out("stop");
 }
-
-$queue->wait();
-
-phore_out("stop");
-
 echo "\nOK: $ok Err: $err\n";
 echo $data;

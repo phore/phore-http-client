@@ -889,12 +889,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "b9e8c1ff9c262b7951f7f1fb03aeda0093242f7b"
+                "reference": "5e9c970b76d6f3a5b0718256a75ad3cb89e8659b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/b9e8c1ff9c262b7951f7f1fb03aeda0093242f7b",
-                "reference": "b9e8c1ff9c262b7951f7f1fb03aeda0093242f7b",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/5e9c970b76d6f3a5b0718256a75ad3cb89e8659b",
+                "reference": "5e9c970b76d6f3a5b0718256a75ad3cb89e8659b",
                 "shasum": ""
             },
             "require": {
@@ -964,7 +964,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2019-12-03T16:11:17+00:00"
+            "time": "2019-12-04T16:30:12+00:00"
         },
         {
             "name": "psr/cache",
