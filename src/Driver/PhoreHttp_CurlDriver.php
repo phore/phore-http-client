@@ -145,10 +145,11 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
     
     /**
      * @param PhoreHttpRequest $request
+     * @param $retry
      * @return PhoreHttpResponse
      * @throws PhoreHttpRequestException
      */
-    public function execRequest(PhoreHttpRequest $request): PhoreHttpResponse
+    public function execRequest(PhoreHttpRequest $request, $retry = null): PhoreHttpResponse
     {
         $req = $request->__get_request_data();
         $cache = $req["_cache"];
@@ -164,7 +165,15 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
             curl_close($ch);
             return new PhoreHttpResponse($request, $http_status, $this->responseHeaders, $responseBody, ["from_cache" => true]);
         } else {
-            $responseBody = curl_exec($ch);
+            if($retry !== null){
+                $retry = 0;
+                while(curl_errno($ch) == 28 && $retry < 3){
+                    $responseBody = curl_exec($ch);
+                    $retry++;
+                }
+            } else {
+                $responseBody = curl_exec($ch);
+            }
             $http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
             $this->curlInfoLastResponse = curl_getinfo($ch);
         }

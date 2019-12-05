@@ -14,6 +14,7 @@ use Phore\HttpClient\Driver\PhoreHttp_CurlDriver;
 use Phore\HttpClient\Driver\PhoreHttpDriver;
 use Phore\HttpClient\Ex\PhoreHttpRequestException;
 use Phore\HttpClient\Handler\PhoreStreamHandler;
+use phpDocumentor\Reflection\Types\Integer;
 
 class PhoreHttpRequest
 {
@@ -250,13 +251,15 @@ class PhoreHttpRequest
      * @param bool $throwExceptionOnBodyStatusCode
      * Throws an exception if the body status code is bigger/equals 400
      * Otherwise only connection errors trigger exceptions
+     * @param $retry
+     * NUmber of retries up to a maximum of X
      * @return PhoreHttpResponse
      * @throws PhoreHttpRequestException
      */
-    public function send(bool $throwExceptionOnBodyStatusCode=true) : PhoreHttpResponse
+    public function send(bool $throwExceptionOnBodyStatusCode=true, $retry = null) : PhoreHttpResponse
     {
         self::$lastRequest = $this;
-        $result = $this->driver->execRequest($this);
+        $result = $this->driver->execRequest($this, $retry);
         self::$lastResponse = $result;
         if ($result->getHttpStatus() >= 400 && $throwExceptionOnBodyStatusCode) {
             $body = $result->getBody();
