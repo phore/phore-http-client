@@ -51,7 +51,7 @@ class PhoreHttpAsyncQueue
     }
 
 
-    public function wait()
+    public function wait($retry = null)
     {
         $noRun = 0;
 
@@ -103,15 +103,14 @@ class PhoreHttpAsyncQueue
                     continue;
                 }
 
-                $http_status = curl_getinfo($data[1], CURLINFO_RESPONSE_CODE);;
+                $http_status = curl_getinfo($data[1], CURLINFO_RESPONSE_CODE);
                 if ($infoRead["result"] === CURLE_OK && $http_status > 0 && $http_status < 300 || $http_status >= 400) {
 
 
 
                     $strContent = curl_multi_getcontent($data[1]);
                     $response = new PhoreHttpResponse($data[0], curl_getinfo($data[1], CURLINFO_RESPONSE_CODE), $data[0]->getDriver()->responseHeaders, $strContent);
-                    curl_multi_remove_handle($this->multiHandle, $data[1]);
-                    curl_close($data[1]);
+
                     unset($this->requests[$key]);
 
                     if ($http_status < 300) {
@@ -119,6 +118,19 @@ class PhoreHttpAsyncQueue
                             ($this->onSuccessCb)($response);
                         $data[2]->resolve($response);
                     } else {
+
+                        if($retry !== null ){ //&& curl_errno($data[1]) !== 0
+                            curl_exec($data[1]);
+
+                            $retry = 0;
+                                while($retry < 3){
+                                    $retry++;
+                                    phore_out("Retry: $retry");
+                                }
+                            }
+                        //$test = curl_errno($data[1]);
+                        //print_r($test);
+
                         if (strlen($strContent) === 0) {
                             $body = "(empty body)";
                         } elseif (strlen($strContent) < 8000) {
@@ -131,6 +143,8 @@ class PhoreHttpAsyncQueue
                             ($this->onErrorCb)($ex);
                         $data[2]->reject($ex);
                     }
+                    curl_multi_remove_handle($this->multiHandle, $data[1]);
+                    curl_close($data[1]);
 
                     continue;
                 }

@@ -15,7 +15,7 @@ use Phore\HttpClient\PhoreHttpResponse;
 require __DIR__ . "/../vendor/autoload.php";
 
 
-
+/*
         //$queue->queue(phore_http_request("http://localhost/test.php?case=wait"));
 
 phore_out("Start");
@@ -44,3 +44,4 @@ while (1) {
 }
 echo "\nOK: $ok Err: $err\n";
 echo $data;
+*/

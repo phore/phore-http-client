@@ -136,4 +136,27 @@ class RequestPoolingTest extends TestCase
         $queue->wait();
     }
 
+    public function testRetry()
+    {
+        $queue = new PhoreHttpAsyncQueue();
+
+        //$queue->queue(phore_http_request("http://localhost/test.php?case=wait"));
+        $fail = 0;
+        $ok = 0;
+        for ($i=0; $i<20; $i++) {
+            $queue->queue(phore_http_request("http://localhost/test"))->then(
+                function(PhoreHttpResponse $response) use (&$ok) {
+                    $ok++;
+                }, function($err) use (&$fail) {
+                $fail++;
+            }
+            );
+        }
+
+        $queue->wait(3);
+        $this->assertEquals(0, $fail);
+        $this->assertEquals(20, $ok);
+    }
+
+
 }
