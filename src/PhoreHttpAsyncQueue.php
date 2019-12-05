@@ -118,18 +118,15 @@ class PhoreHttpAsyncQueue
                             ($this->onSuccessCb)($response);
                         $data[2]->resolve($response);
                     } else {
-
-                        if($retry !== null ){ //&& curl_errno($data[1]) !== 0
-                            curl_exec($data[1]);
-
+                        if($retry !== null ){
                             $retry = 0;
-                                while($retry < 3){
-                                    $retry++;
-                                    phore_out("Retry: $retry");
-                                }
-                            }
-                        //$test = curl_errno($data[1]);
-                        //print_r($test);
+                            do{
+                                $retry++;
+                                curl_exec($data[1]);
+                                $http_status = curl_getinfo($data[1], CURLINFO_RESPONSE_CODE);
+                                phore_out("Retry: $retry");
+                            }while($retry < 3 && $http_status >= 300);
+                        }
 
                         if (strlen($strContent) === 0) {
                             $body = "(empty body)";
