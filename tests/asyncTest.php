@@ -23,7 +23,7 @@ phore_out("Start");
 $err = 0;
 $ok = 0;
 $queue = new PhoreHttpAsyncQueue();
-for ($i=0; $i<50; $i++) {
+for ($i=0; $i<10; $i++) {
 
     $queue->queue(phore_http_request("http://localhost/test.php?case=wait")->withTimeout(2,11))->then(
         function(PhoreHttpResponse $response) use (&$data, &$ok, $queue)  {
