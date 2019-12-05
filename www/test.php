@@ -29,7 +29,7 @@ switch ($_GET["case"]) {
 
     case "wait":
         $id = uniqid();
-        for($i = 0; $i<10; $i++) {
+        for($i = 0; $i<5; $i++) {
             echo "Line.$id\n";
             sleep(1);
         }

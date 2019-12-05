@@ -26,9 +26,9 @@ class PhoreHttpAsyncQueue
     public function __construct()
     {
         $this->multiHandle = curl_multi_init();
-        curl_multi_setopt($this->multiHandle, CURLMOPT_MAXCONNECTS, 2000);
-        curl_multi_setopt($this->multiHandle, CURLMOPT_MAX_HOST_CONNECTIONS, 1000);
-        curl_multi_setopt($this->multiHandle, CURLMOPT_PIPELINING, 1);
+        curl_multi_setopt($this->multiHandle, CURLMOPT_MAXCONNECTS, 250);
+        curl_multi_setopt($this->multiHandle, CURLMOPT_MAX_HOST_CONNECTIONS, 250);
+        curl_multi_setopt($this->multiHandle, CURLMOPT_PIPELINING, 0);
     }
 
     public function queue(PhoreHttpRequest $request) : PhoreHttpPromise
@@ -58,14 +58,13 @@ class PhoreHttpAsyncQueue
         do {
 
             curl_multi_exec($this->multiHandle, $running);
-            curl_multi_select($this->multiHandle, 0.1); // Slower than just usleep()
+            curl_multi_select($this->multiHandle); // Slower than just usleep()
             $infoRead = curl_multi_info_read($this->multiHandle);
-            #usleep(1000);
+            //usleep(100);
 
             if ($infoRead === false)
                 continue;
 
-            //echo "\nRunning $running " . print_r($infoRead, true);
             foreach ($this->requests as $key => $data) {
                 if ($data === null)
                     continue;
@@ -88,8 +87,6 @@ class PhoreHttpAsyncQueue
                         CURLE_SSL_CONNECT_ERROR => "SSL Connect Error"
                     ];
 
-                    print_r (curl_getinfo($data[1]));
-
                     curl_multi_remove_handle($this->multiHandle, $data[1]);
                     curl_close($data[1]);
                     unset($this->requests[$key]);
@@ -99,14 +96,11 @@ class PhoreHttpAsyncQueue
                     if ($this->onErrorCb !== null)
                         ($this->onErrorCb)($ex);
                     $data[2]->reject($ex);
-                    usleep(100);
                     continue;
                 }
 
                 $http_status = curl_getinfo($data[1], CURLINFO_RESPONSE_CODE);;
                 if ($infoRead["result"] === CURLE_OK && $http_status > 0 && $http_status < 300 || $http_status >= 400) {
-
-
 
                     $strContent = curl_multi_getcontent($data[1]);
                     $response = new PhoreHttpResponse($data[0], curl_getinfo($data[1], CURLINFO_RESPONSE_CODE), $data[0]->getDriver()->responseHeaders, $strContent);
