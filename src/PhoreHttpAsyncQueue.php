@@ -31,6 +31,24 @@ class PhoreHttpAsyncQueue
         curl_multi_setopt($this->multiHandle, CURLMOPT_PIPELINING, 0);
     }
 
+    /**
+     * Queue a Http Request for parallel execution
+     *
+     * ```
+     * $q->queue(phore_http_request("http://some.tld"))->then(
+     *      function(PhoreHttpResponse $successResponse) {
+     *          .. on success code ...
+     *      },
+     *      function(PhoreHttpRequestException $exception) {
+     *          .. on error code ..
+     *      }
+     * );
+     * $q->wait();
+     * ```
+     *
+     * @param PhoreHttpRequest $request
+     * @return PhoreHttpPromise
+     */
     public function queue(PhoreHttpRequest $request) : PhoreHttpPromise
     {
         $promise = new PhoreHttpPromise();
