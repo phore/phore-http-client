@@ -108,7 +108,7 @@ class PhoreHttpAsyncQueue
                     curl_close($data[1]);
                     unset($this->requests[$key]);
 
-                    if ($http_status < 300) {
+                    if ($http_status < 400) {
                          if ($this->onSuccessCb !== null)
                             ($this->onSuccessCb)($response);
                         $data[2]->resolve($response);
