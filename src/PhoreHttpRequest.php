@@ -166,6 +166,23 @@ class PhoreHttpRequest
     }
 
     /**
+     * Send POST Json Data
+     * 
+     * @param array $data
+     * @return $this
+     */
+    public function withJsonBody (array $data) : self
+    {
+        $new = clone ($this);
+        if ($new->request["method"] === "GET")
+            $new->request["method"] = "POST";
+        
+        $new->request["headers"]["Content-Type"] = "application/json";
+        $new->request["postBody"] = phore_json_encode($postBody);
+        return $new;
+    }
+
+    /**
      * Send data x-www-form-urlencoded
      *
      * @param array $formData
