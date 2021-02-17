@@ -178,7 +178,7 @@ class PhoreHttpRequest
             $new->request["method"] = "POST";
         
         $new->request["headers"]["Content-Type"] = "application/json";
-        $new->request["postBody"] = phore_json_encode($postBody);
+        $new->request["postBody"] = phore_json_encode($data);
         return $new;
     }
 
