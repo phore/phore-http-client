@@ -45,16 +45,23 @@ class PhoreHttpResponse
     }
 
     /**
-     * @return array
+     * @template T
+     * @param class-string<T> $class
+     * @return array|T
      * @throws PhoreHttpRequestException
      */
-    public function getBodyJson () : array
+    public function getBodyJson (string $class = null)
     {
         try {
-            return phore_json_decode($this->getBody());
+            $data = phore_json_decode($this->getBody());
+            if ($class !== null) {
+                if (!function_exists("phore_hydrate"))
+                    throw new InvalidArgumentException("Object casting impossible: Package 'phore/hydrator' not installed.");
+                $data = phore_hydrate($data, $class);
+            }
+            return $data;
         } catch(\InvalidArgumentException $e) {
             throw new PhoreHttpRequestException($e->getMessage() . "\nBody:\n" . substr($this->getBody(), 0, 8000) . "\n...", $this, 0, $e);
-
         }
     }
 
