@@ -75,7 +75,7 @@ class PhoreUrl
         return $this->withUrl("scheme", $scheme);
     }
 
-    public function getPort() : string
+    public function getPort() : ?string
     {
         return parse_url($this->url, PHP_URL_PORT);
     }
