@@ -65,7 +65,7 @@ class PhoreUrl
         return new self($url, $params);
     }
 
-    public function getScheme() : string
+    public function getScheme() : ?string
     {
         return parse_url($this->url, PHP_URL_SCHEME);
     }
@@ -85,7 +85,7 @@ class PhoreUrl
         return $this->withUrl("port", $port);
     }
 
-    public function getUser() : string
+    public function getUser() : ?string
     {
         return parse_url($this->url, PHP_URL_USER);
     }
@@ -95,7 +95,7 @@ class PhoreUrl
         return $this->withUrl("user", $user);
     }
 
-    public function getPass() : string
+    public function getPass() : ?string
     {
         return parse_url($this->url, PHP_URL_PASS);
     }
@@ -105,7 +105,7 @@ class PhoreUrl
         return $this->withUrl("pass", $pass);
     }
 
-    public function getHost() : string
+    public function getHost() : ?string
     {
         return parse_url($this->url, PHP_URL_HOST);
     }
@@ -115,7 +115,7 @@ class PhoreUrl
         return $this->withUrl("host", $hostname);
     }
 
-    public function getPath() : string
+    public function getPath() : ?string
     {
         return parse_url($this->url, PHP_URL_PATH);
     }
@@ -125,7 +125,7 @@ class PhoreUrl
         return $this->withUrl("path", $path);
     }
 
-    public function getQuery() : string
+    public function getQuery() : ?string
     {
         return parse_url($this->url, PHP_URL_QUERY);
     }
@@ -135,7 +135,7 @@ class PhoreUrl
         return $this->withUrl("query", $query);
     }
 
-    public function getFragment() : string
+    public function getFragment() : ?string
     {
         return parse_url($this->url, PHP_URL_FRAGMENT);
     }
