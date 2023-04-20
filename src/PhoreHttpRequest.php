@@ -243,6 +243,13 @@ class PhoreHttpRequest
         return $new;
     }
 
+    public function withHeader(string $name, string $value) : self
+    {
+        $new = clone ($this);
+        $new->request["headers"][$name] = $value;
+        return $new;
+    }
+
     public function withBasicAuth(string $username=null, string $passwd=null) : self
     {
         $new = clone ($this);
