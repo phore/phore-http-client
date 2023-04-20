@@ -166,8 +166,33 @@ class PhoreHttpRequest
     }
 
     /**
+     * @param string $body
+     * @return $this
+     */
+    public function withBody(string $body) : self {
+        $new = clone ($this);
+        if ($new->request["method"] === "GET")
+            $new->request["method"] = "POST";
+        $new->request["postBody"] = $body;
+        return $new;
+    }
+
+    /**
+     * @param $body
+     * @return $this
+     */
+    public function withBodyJson($body) : self {
+        $new = clone ($this);
+        if ($new->request["method"] === "GET")
+            $new->request["method"] = "POST";
+        $new->request["postBody"] = phore_json_encode($body);
+        $new->request["headers"]["Content-Type"] = "application/json";
+        return $new;
+    }
+
+    /**
      * Send POST Json Data
-     * 
+     *
      * @param array $data
      * @return $this
      */
@@ -176,7 +201,7 @@ class PhoreHttpRequest
         $new = clone ($this);
         if ($new->request["method"] === "GET")
             $new->request["method"] = "POST";
-        
+
         $new->request["headers"]["Content-Type"] = "application/json";
         $new->request["postBody"] = phore_json_encode($data);
         return $new;
