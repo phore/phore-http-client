@@ -21,8 +21,7 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
         CURLOPT_SAFE_UPLOAD => true,                // Allow only CurlFile for fileUploads
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_MAXREDIRS => 3,
-        CURLOPT_CONNECTTIMEOUT_MS => 10 * 1000,
-        CURLOPT_TCP_FASTOPEN => true
+        CURLOPT_CONNECTTIMEOUT_MS => 10 * 1000
     ];
 
 
@@ -39,6 +38,8 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
 
         $this->curlOpt = $options + $this->curlOpt;
 
+        if (defined(CURLOPT_TCP_FASTOPEN))
+            $this->curlOpt[CURLOPT_TCP_FASTOPEN] = true;
     }
 
 
