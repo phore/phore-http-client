@@ -41,7 +41,7 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
 
     }
 
-    
+
 
     public function _buildCurlChannel(PhoreHttpRequest $request, &$cacheKey)
     {
@@ -83,9 +83,6 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
             $cacheKey .= sha1($req["basicAuthUser"] . ":" . $req["basicAuthPass"]);
         }
 
-
-
-
         $curlOpt[CURLOPT_HEADERFUNCTION] = function ($curl, $headerLine)  {
             $len = strlen($headerLine);
             $headerLine = trim($headerLine);
@@ -121,7 +118,14 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
 
         $ch = curl_init();
 
-        curl_setopt_array($ch, $curlOpt);
+        foreach ($curlOpt as $key => $val) {
+            if ( ! is_int($key))
+                throw new \InvalidArgumentException("Invalid CurlOpt Key: '$key'");
+            if ( ! curl_setopt($ch, $key, $val))
+                throw new \InvalidArgumentException("Invalid CurlOpt Value: '$key' => '$val'");
+        }
+
+        //curl_setopt_array($ch, $curlOpt);
 
         $headers = [];
         foreach ($req["headers"] as $key => $val) {
@@ -140,9 +144,9 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
     }
 
 
-    
-    
-    
+
+
+
     /**
      * @param PhoreHttpRequest $request
      * @return PhoreHttpResponse
