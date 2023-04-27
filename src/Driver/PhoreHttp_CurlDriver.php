@@ -180,7 +180,10 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
         }
 
         if ($responseBody === false) {
-            throw new PhoreHttpRequestException("Request to '{$req["url"]}' failed: " . curl_error($ch) .", " . curl_errno($ch));
+            $msg = curl_error($ch);
+            if (curl_errno($ch) === 3)
+                $msg = "Malformed request url";
+            throw new PhoreHttpRequestException("Request to '{$req["url"]}' failed: Curl Err: " . $msg .", Curl ErrNo:" . curl_errno($ch));
         }
         curl_close($ch);
         if ($cache instanceof Cache) {
