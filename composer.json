@@ -13,7 +13,6 @@
     "php": ">=7.1",
     "phore/core": "*",
     "ext-curl": "*",
-    "ext-http": "*",
     "ext-json": "*"
   },
   "autoload": {
