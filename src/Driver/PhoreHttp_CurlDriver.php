@@ -21,6 +21,7 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
         CURLOPT_SAFE_UPLOAD => true,                // Allow only CurlFile for fileUploads
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_MAXREDIRS => 3,
+        CURLOPT_ENCODING => "gzip, deflate",
         CURLOPT_CONNECTTIMEOUT_MS => 10 * 1000
     ];
 
@@ -60,6 +61,7 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
             $cacheKey .= "_POST";
         }
         if ($req["method"] == "PUT") {
+            $curlOpt[CURLOPT_CUSTOMREQUEST] = "PUT";
             $curlOpt[CURLOPT_PUT] = true;
             $cacheKey .= "_PUT";
         }
