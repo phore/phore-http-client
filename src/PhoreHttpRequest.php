@@ -303,6 +303,7 @@ class PhoreHttpRequest
      * Otherwise only connection errors trigger exceptions
      * @return PhoreHttpResponse
      * @throws PhoreHttpRequestException
+     * @throws ServiceException
      */
     public function send(bool $throwExceptionOnBodyStatusCode=true) : PhoreHttpResponse
     {
