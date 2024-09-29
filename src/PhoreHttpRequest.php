@@ -14,6 +14,8 @@ use Phore\HttpClient\Driver\PhoreHttp_CurlDriver;
 use Phore\HttpClient\Driver\PhoreHttpDriver;
 use Phore\HttpClient\Ex\PhoreHttpRequestException;
 use Phore\HttpClient\Handler\PhoreStreamHandler;
+use Phore\ServiceException\ServiceException;
+use Phore\ServiceException\ServiceExceptionKernel;
 
 class PhoreHttpRequest
 {
@@ -316,6 +318,13 @@ class PhoreHttpRequest
             } else {
                 $body = "'". substr($body, 0, 8000) . "\n...'";
             }
+
+            if (class_exists(ServiceException::class)) {
+                $serviceException = ServiceException::fromJson($body);
+                if ($serviceException !== null)
+                    throw $serviceException;
+            }
+
             throw new PhoreHttpRequestException("HttpResponse: Server returned status-code '{$result->getHttpStatus()}' on '{$this->request["url"]}'\nBody:\n" . $body, $result, $result->getHttpStatus());
         }
         return $result;

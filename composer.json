@@ -24,7 +24,8 @@
     ]
   },
   "suggest": {
-    "phore/cache": "Use request caching"
+    "phore/cache": "Use request caching",
+    "phore/service-exception": "Use service exception handling"
   },
   "minimum-stability": "dev",
   "require-dev": {
