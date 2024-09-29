@@ -82,7 +82,10 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
 
         if ($req["basicAuthUser"] !== null) {
             $curlOpt[CURLOPT_HTTPAUTH] = CURLAUTH_BASIC;
-            $curlOpt[CURLOPT_USERPWD] = $req["basicAuthUser"] . ":" . $req["basicAuthPass"];
+            if ($req["basicAuthPass"] === null)
+                $curlOpt[CURLOPT_USERPWD] = $req["basicAuthUser"];
+            else
+                $curlOpt[CURLOPT_USERPWD] = $req["basicAuthUser"] . ":" . $req["basicAuthPass"];
             $cacheKey .= sha1($req["basicAuthUser"] . ":" . $req["basicAuthPass"]);
         }
 
