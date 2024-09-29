@@ -311,6 +311,11 @@ class PhoreHttpRequest
         self::$lastResponse = $result;
         if ($result->getHttpStatus() >= 400 && $throwExceptionOnBodyStatusCode) {
             $body = $result->getBody();
+            if (class_exists(ServiceException::class)) {
+                $serviceException = ServiceException::fromJson($body);
+                if ($serviceException !== null)
+                    throw $serviceException;
+            }
             if (strlen($body) === 0) {
                 $body = "(empty body)";
             } elseif (strlen($body) < 8000) {
@@ -319,11 +324,7 @@ class PhoreHttpRequest
                 $body = "'". substr($body, 0, 8000) . "\n...'";
             }
 
-            if (class_exists(ServiceException::class)) {
-                $serviceException = ServiceException::fromJson($body);
-                if ($serviceException !== null)
-                    throw $serviceException;
-            }
+
 
             throw new PhoreHttpRequestException("HttpResponse: Server returned status-code '{$result->getHttpStatus()}' on '{$this->request["url"]}'\nBody:\n" . $body, $result, $result->getHttpStatus());
         }
