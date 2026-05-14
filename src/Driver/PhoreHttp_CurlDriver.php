@@ -171,7 +171,7 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
                 $req["streamReaderCallback"]->message($responseBody);
                 $req["streamReaderCallback"]->message(null);
             }
-            curl_close($ch);
+           
             return new PhoreHttpResponse($request, $http_status, $this->responseHeaders, $responseBody, ["from_cache" => true]);
         } else {
             $responseBody = curl_exec($ch);
@@ -190,7 +190,7 @@ class PhoreHttp_CurlDriver implements PhoreHttpDriver
                 $msg = "Malformed request url";
             throw new PhoreHttpRequestException("Request to '{$req["url"]}' failed: Curl Err: " . $msg .", Curl ErrNo:" . curl_errno($ch));
         }
-        curl_close($ch);
+        
         if ($cache instanceof Cache) {
             $cache->set($cacheKey, [$responseBody, $this->responseHeaders, $http_status]);
         }
