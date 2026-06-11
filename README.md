@@ -6,11 +6,14 @@ Easy to use http-client with fluent api.
 
 ## Example
 
-```
-phore_http_request("http://localhost/test.php?case=200")->withMethod()
+```php
+$response = phore_http_request("http://localhost/test.php?case=200")
+    ->send();
+
+echo $response->getBody();
 ```
 
-
+More executable examples are available in [`examples/`](examples/).
 
 ## Request caching
 
@@ -24,4 +27,4 @@ if ($req->isFromCache() === true)
     echo "From Cache: " . $req->getBody();
 ```
 
-Examples:
+Examples: see [`examples/`](examples/) and [`examples/README.md`](examples/README.md).
