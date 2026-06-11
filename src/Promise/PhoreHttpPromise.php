@@ -18,7 +18,7 @@ class PhoreHttpPromise
 
     private $next = null;
 
-    public function then (callable $success=null, callable $error=null) : self
+    public function then (?callable $success = null, ?callable $error = null) : self
     {
         $this->success = $success;
         $this->error = $error;
@@ -29,6 +29,7 @@ class PhoreHttpPromise
 
     public function resolve($value)
     {
+        $return = $value;
 
         if ($this->success !== null)
             $return = ($this->success)($value);

@@ -21,7 +21,7 @@ class PhoreHttpResponse
     private $responseBody;
     private $opts;
 
-    public function __construct(PhoreHttpRequest $request, int $httpStatus, array $responseHeaders, string $responseBody = null, array $opts=[])
+    public function __construct(PhoreHttpRequest $request, int $httpStatus, array $responseHeaders, ?string $responseBody = null, array $opts=[])
     {
         $this->request = $request;
         $this->httpStatus = $httpStatus;
@@ -50,7 +50,7 @@ class PhoreHttpResponse
      * @return array|T
      * @throws PhoreHttpRequestException
      */
-    public function getBodyJson (string $class = null)
+    public function getBodyJson (?string $class = null)
     {
         try {
             $data = phore_json_decode($this->getBody());

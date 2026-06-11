@@ -13,7 +13,7 @@ function phore_http_request (string $url, array $params = [], array $curlOptions
 }
 
 
-function phore_url (string $url=null, array $params = [])
+function phore_url (?string $url = null, array $params = []) : \Phore\HttpClient\PhoreUrl
 {
     return new \Phore\HttpClient\PhoreUrl($url, $params);
 }

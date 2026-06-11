@@ -135,7 +135,7 @@ class PhoreHttpRequest
      * @param float|null $timeout
      * @return PhoreHttpRequest
      */
-    public function withTimeout(float $connect=null, float $timeout=null) : self
+    public function withTimeout(?float $connect = null, ?float $timeout = null) : self
     {
         $new = clone ($this);
         $new->request["timeout_connect"] = $connect;
@@ -252,7 +252,7 @@ class PhoreHttpRequest
         return $new;
     }
 
-    public function withBasicAuth(string $username=null, string $passwd=null) : self
+    public function withBasicAuth(?string $username = null, ?string $passwd = null) : self
     {
         $new = clone ($this);
         $new->request["basicAuthUser"] = $username;

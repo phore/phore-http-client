@@ -106,7 +106,6 @@ class PhoreHttpAsyncQueue
                     ];
 
                     curl_multi_remove_handle($this->multiHandle, $data[1]);
-                    curl_close($data[1]);
                     unset($this->requests[$key]);
                     $error = $msg[$infoRead["result"]] ?? "Curle_error: {$infoRead["result"]}";
 
@@ -123,7 +122,6 @@ class PhoreHttpAsyncQueue
                     $strContent = curl_multi_getcontent($data[1]);
                     $response = new PhoreHttpResponse($data[0], curl_getinfo($data[1], CURLINFO_RESPONSE_CODE), $data[0]->getDriver()->responseHeaders, $strContent);
                     curl_multi_remove_handle($this->multiHandle, $data[1]);
-                    curl_close($data[1]);
                     unset($this->requests[$key]);
 
                     if ($http_status < 300) {

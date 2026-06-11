@@ -17,7 +17,7 @@ class PhoreHttpRequestException extends \Exception
 
     private $response = null;
 
-    public function __construct(string $message, PhoreHttpResponse $response=null, int $code = 0, \Throwable $previous = null)
+    public function __construct(string $message, ?PhoreHttpResponse $response = null, int $code = 0, ?\Throwable $previous = null)
     {
         parent::__construct($message, $code, $previous);
         $this->response = $response;

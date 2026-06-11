@@ -8,4 +8,4 @@ command:
     - "composer update"
 
   test:
-    - "vendor/bin/phpunit --verbose --testdox tests/"
+    - "vendor/bin/phpunit --use-baseline phpunit-baseline.xml --testdox tests/"

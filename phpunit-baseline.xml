@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<files version="1">
+ <file path="vendor/phore/cache/src/Cache.php">
+  <line number="58" hash="c7d1bea6588af6060bb8ced8452d765bcc01f673">
+   <issue><![CDATA[Phore\Cache\Cache::set(): Implicitly marking parameter $ttl as nullable is deprecated, the explicit nullable type must be used instead]]></issue>
+  </line>
+ </file>
+ <file path="vendor/phore/filesystem/src/FileStream.php">
+  <line number="93" hash="fa5c25dd545211568bddb58dbae85eab96847346">
+   <issue><![CDATA[Phore\FileSystem\FileStream::fgets(): Implicitly marking parameter $length as nullable is deprecated, the explicit nullable type must be used instead]]></issue>
+  </line>
+  <line number="193" hash="087369b1da73be0773d84a7f1a8044a0b22f765d">
+   <issue><![CDATA[Phore\FileSystem\FileStream::passthru(): Implicitly marking parameter $callback as nullable is deprecated, the explicit nullable type must be used instead]]></issue>
+  </line>
+ </file>
+ <file path="vendor/phore/filesystem/src/PhoreDirectory.php">
+  <line number="71" hash="819714f99fd6a4146c49c6bb42220c518a79243f">
+   <issue><![CDATA[Phore\FileSystem\PhoreDirectory::walk(): Implicitly marking parameter $filter as nullable is deprecated, the explicit nullable type must be used instead]]></issue>
+  </line>
+  <line number="101" hash="6100813f0dc0b84342bc4578938ed1bde6ce7dae">
+   <issue><![CDATA[Phore\FileSystem\PhoreDirectory::walkR(): Implicitly marking parameter $filter as nullable is deprecated, the explicit nullable type must be used instead]]></issue>
+  </line>
+  <line number="119" hash="fbff3b31ba06f14b80c142f0697fe0f029b6ba4f">
+   <issue><![CDATA[Phore\FileSystem\PhoreDirectory::genWalk(): Implicitly marking parameter $filter as nullable is deprecated, the explicit nullable type must be used instead]]></issue>
+  </line>
+  <line number="162" hash="26cbc16181e68ed81fd0e21171c98be402d2b75d">
+   <issue><![CDATA[Phore\FileSystem\PhoreDirectory::listFiles(): Implicitly marking parameter $filter as nullable is deprecated, the explicit nullable type must be used instead]]></issue>
+  </line>
+  <line number="195" hash="527497a447df6d3c52f9cf0a1f451955ae9a0bf0">
+   <issue><![CDATA[Phore\FileSystem\PhoreDirectory::getListSorted(): Implicitly marking parameter $filter as nullable is deprecated, the explicit nullable type must be used instead]]></issue>
+  </line>
+ </file>
+ <file path="vendor/phore/filesystem/src/PhoreFile.php">
+  <line number="121" hash="485d4d52b034acf3fe4f13f5b7e6e49c02b9dbba">
+   <issue><![CDATA[Phore\FileSystem\PhoreFile::streamCopyTo(): Implicitly marking parameter $maxlen as nullable is deprecated, the explicit nullable type must be used instead]]></issue>
+  </line>
+  <line number="279" hash="832cfe1c8f5f8ddfc546bb4c88df56baf55dc07c">
+   <issue><![CDATA[Phore\FileSystem\PhoreFile::get_yaml(): Implicitly marking parameter $cast as nullable is deprecated, the explicit nullable type must be used instead]]></issue>
+  </line>
+  <line number="350" hash="1a5d674cf41d27bba504f25f513f14e966d9dd65">
+   <issue><![CDATA[Phore\FileSystem\PhoreFile::get_json(): Implicitly marking parameter $cast as nullable is deprecated, the explicit nullable type must be used instead]]></issue>
+  </line>
+  <line number="389" hash="36cca9c9112a3cde78d70bffc862740a874538e1">
+   <issue><![CDATA[Phore\FileSystem\PhoreFile::set_csv(): Implicitly marking parameter $columns as nullable is deprecated, the explicit nullable type must be used instead]]></issue>
+  </line>
+ </file>
+ <file path="vendor/phore/filesystem/src/PhoreUri.php">
+  <line number="33" hash="340689df4301f6cc7ed8a709491db697f1b72bbc">
+   <issue><![CDATA[Phore\FileSystem\PhoreUri::__construct(): Implicitly marking parameter $__relPath as nullable is deprecated, the explicit nullable type must be used instead]]></issue>
+  </line>
+  <line number="41" hash="c3c761c3313b0e9c2035314f8901e9ee134c8a50">
+   <issue><![CDATA[Phore\FileSystem\PhoreUri::validate(): Implicitly marking parameter $optFileName as nullable is deprecated, the explicit nullable type must be used instead]]></issue>
+  </line>
+  <line number="379" hash="ce15247eb5858a015f73d83472a0b112c8d62bc0">
+   <issue><![CDATA[Phore\FileSystem\PhoreUri::abs(): Implicitly marking parameter $cwd as nullable is deprecated, the explicit nullable type must be used instead]]></issue>
+  </line>
+ </file>
+ <file path="vendor/phore/objectstore/src/Driver/FileSystemObjectStoreDriver.php">
+  <line number="39" hash="298526af7993eca27f409b2894cb7b563076b103">
+   <issue><![CDATA[Phore\ObjectStore\Driver\FileSystemObjectStoreDriver::__construct(): Implicitly marking parameter $encryption as nullable is deprecated, the explicit nullable type must be used instead]]></issue>
+  </line>
+  <line number="76" hash="00b697d4eaf4535f7672c5ba9ece6470ca064701">
+   <issue><![CDATA[Phore\ObjectStore\Driver\FileSystemObjectStoreDriver::put(): Implicitly marking parameter $metadata as nullable is deprecated, the explicit nullable type must be used instead]]></issue>
+  </line>
+  <line number="95" hash="caa27bf7c0e68b196e47bdacc31e885e292c1e6d">
+   <issue><![CDATA[Phore\ObjectStore\Driver\FileSystemObjectStoreDriver::putStream(): Implicitly marking parameter $metadata as nullable is deprecated, the explicit nullable type must be used instead]]></issue>
+  </line>
+  <line number="111" hash="5036eba27f09479d2743fca98abbf1ac60235a40">
+   <issue><![CDATA[Phore\ObjectStore\Driver\FileSystemObjectStoreDriver::get(): Implicitly marking parameter $meta as nullable is deprecated, the explicit nullable type must be used instead]]></issue>
+  </line>
+  <line number="136" hash="e0f3e427a7b750f8789fa5f3330a16bea78b7c1e">
+   <issue><![CDATA[Phore\ObjectStore\Driver\FileSystemObjectStoreDriver::getStream(): Implicitly marking parameter $meta as nullable is deprecated, the explicit nullable type must be used instead]]></issue>
+  </line>
+  <line number="271" hash="1494deb689db258b0012fa71201c964d74b9441a">
+   <issue><![CDATA[Phore\ObjectStore\Driver\FileSystemObjectStoreDriver::list(): Implicitly marking parameter $prefix as nullable is deprecated, the explicit nullable type must be used instead]]></issue>
+  </line>
+ </file>
+ <file path="vendor/phore/objectstore/src/Driver/ObjectStoreDriver.php">
+  <line number="34" hash="57bb9911e1fedb51eeb98b9755b48309664b0ea5">
+   <issue><![CDATA[Phore\ObjectStore\Driver\ObjectStoreDriver::put(): Implicitly marking parameter $metadata as nullable is deprecated, the explicit nullable type must be used instead]]></issue>
+  </line>
+  <line number="42" hash="59e17b9c2895dbc0dff1747c738c108dc25e0c6d">
+   <issue><![CDATA[Phore\ObjectStore\Driver\ObjectStoreDriver::putStream(): Implicitly marking parameter $metadata as nullable is deprecated, the explicit nullable type must be used instead]]></issue>
+  </line>
+  <line number="50" hash="4bcc55a56cd4d920884676f367c0c32cfe1c8d36">
+   <issue><![CDATA[Phore\ObjectStore\Driver\ObjectStoreDriver::get(): Implicitly marking parameter $meta as nullable is deprecated, the explicit nullable type must be used instead]]></issue>
+  </line>
+  <line number="58" hash="7540885518d6031f61fb0e390651f3a235ca3caa">
+   <issue><![CDATA[Phore\ObjectStore\Driver\ObjectStoreDriver::getStream(): Implicitly marking parameter $meta as nullable is deprecated, the explicit nullable type must be used instead]]></issue>
+  </line>
+  <line number="141" hash="a9e099e9e37f02373c83b3e77d8d03794da56d55">
+   <issue><![CDATA[Phore\ObjectStore\Driver\ObjectStoreDriver::list(): Implicitly marking parameter $prefix as nullable is deprecated, the explicit nullable type must be used instead]]></issue>
+  </line>
+ </file>
+ <file path="vendor/phore/objectstore/src/Type/ObjectStoreObject.php">
+  <line number="44" hash="57918374636248518cba73b59026fb1f0f128be7">
+   <issue><![CDATA[Phore\ObjectStore\Type\ObjectStoreObject::__construct(): Implicitly marking parameter $metadata as nullable is deprecated, the explicit nullable type must be used instead]]></issue>
+  </line>
+  <line number="92" hash="92a315b2b616c44e410ad192c052c4e89778ca0a">
+   <issue><![CDATA[Phore\ObjectStore\Type\ObjectStoreObject::getJson(): Implicitly marking parameter $cast as nullable is deprecated, the explicit nullable type must be used instead]]></issue>
+  </line>
+ </file>
+</files>

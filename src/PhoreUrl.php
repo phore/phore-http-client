@@ -13,7 +13,7 @@ class PhoreUrl
 {
     private $url;
 
-    public function __construct(string $url=null, array $params = [])
+    public function __construct(?string $url = null, array $params = [])
     {
         $url = preg_replace_callback(
             "/\{([a-z0-9\_\-\.]+)\}/i",

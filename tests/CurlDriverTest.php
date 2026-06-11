@@ -15,7 +15,6 @@ class CurlDriverTest extends TestCase
         $constr = $class->getConstructor();
         $constr->invokeArgs($curlDriver, [[CURLOPT_FOLLOWLOCATION => false, CURLOPT_COOKIESESSION => true]]);
         $prop = $class->getProperty("curlOpt");
-        $prop->setAccessible(true);
         $curlOpt = $prop->getValue($curlDriver);
 
         $this->assertFalse($curlOpt[CURLOPT_FOLLOWLOCATION]);
