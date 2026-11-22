@@ -29,9 +29,12 @@
   },
   "minimum-stability": "dev",
   "require-dev": {
-    "phpunit/phpunit": "*",
+    "phpunit/phpunit": "^12.5@stable",
     "phore/cache": "*",
-    "phore/filesystem": "*",
+    "phore/filesystem": "^1.1@stable",
     "phore/objectstore": "*"
+  },
+  "scripts": {
+    "test": "phpunit --bootstrap tests/bootstrap.php --use-baseline phpunit-baseline.xml --fail-on-deprecation --testdox tests/"
   }
 }

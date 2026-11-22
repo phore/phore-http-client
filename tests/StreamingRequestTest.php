@@ -18,7 +18,7 @@ class StreamingRequestTest extends TestCase
 
     public function testChunkReadingWorks()
     {
-        phore_http_request("http://localhost/test.php?case=stream")->withStreamReader(
+        phore_http_request(TEST_BASE_URL . "/test.php?case=stream")->withStreamReader(
             new PhoreHttpLineStream(function ($line, $index) use (&$data) {
                 $data .= $index . ":" . $line;
 
@@ -30,7 +30,7 @@ class StreamingRequestTest extends TestCase
 
     public function testStreamWriter()
     {
-        $response = phore_http_request("http://localhost/test.php?case=upload")
+        $response = phore_http_request(TEST_BASE_URL . "/test.php?case=upload")
             ->withStreamWriter(function ($maxLen) {
                 static $index = 0;
                 $index++;

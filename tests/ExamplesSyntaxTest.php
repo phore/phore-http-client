@@ -6,60 +6,6 @@ use PHPUnit\Framework\TestCase;
 
 class ExamplesSyntaxTest extends TestCase
 {
-    private static $serverProcess;
-    private static $baseUrl;
-    private static $serverLog;
-
-    public static function setUpBeforeClass(): void
-    {
-        $projectRoot = dirname(__DIR__);
-        self::$baseUrl = "http://127.0.0.1:18080";
-        self::$serverLog = sys_get_temp_dir() . "/phore-http-client-examples-server.log";
-
-        $command = escapeshellarg(PHP_BINARY)
-            . " -S 127.0.0.1:18080 -t "
-            . escapeshellarg($projectRoot . "/www");
-
-        $descriptors = [
-            0 => ["pipe", "r"],
-            1 => ["file", self::$serverLog, "a"],
-            2 => ["file", self::$serverLog, "a"]
-        ];
-
-        self::$serverProcess = proc_open($command, $descriptors, $pipes, $projectRoot);
-
-        if ( ! is_resource(self::$serverProcess)) {
-            throw new \RuntimeException("Unable to start example test server.");
-        }
-
-        fclose($pipes[0]);
-
-        $ready = false;
-        for ($i = 0; $i < 50; $i++) {
-            $body = @file_get_contents(self::$baseUrl . "/test.php?case=200");
-            if ($body === "ABC") {
-                $ready = true;
-                break;
-            }
-            usleep(100000);
-        }
-
-        if ($ready !== true) {
-            self::tearDownAfterClass();
-            throw new \RuntimeException(
-                "Example test server did not become ready. See log: " . self::$serverLog
-            );
-        }
-    }
-
-    public static function tearDownAfterClass(): void
-    {
-        if (is_resource(self::$serverProcess)) {
-            proc_terminate(self::$serverProcess);
-            proc_close(self::$serverProcess);
-        }
-    }
-
     public function testAllExamplesCanRun(): void
     {
         $exampleFiles = glob(dirname(__DIR__) . "/examples/*.php");
@@ -95,7 +41,7 @@ class ExamplesSyntaxTest extends TestCase
         ];
 
         $env = $_ENV;
-        $env["EXAMPLE_BASE_URL"] = self::$baseUrl;
+        $env["EXAMPLE_BASE_URL"] = TEST_BASE_URL;
 
         $process = proc_open($command, $descriptors, $pipes, dirname(__DIR__), $env);
 
