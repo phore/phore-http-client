@@ -4,6 +4,24 @@
 
 Easy to use http-client with fluent api.
 
+## Tests
+
+Run the tests directly with PHP 8.5, Composer 2 and the PHP extensions `curl`,
+`dom`, `mbstring`, `xml`, `xmlwriter` and `yaml`:
+
+```bash
+composer install
+composer test
+```
+
+The test bootstrap starts PHP's built-in web server on a free local port and
+stops it after the tests. No Kickstart, Docker or separate web server is required.
+GitHub Actions uses the same command with PHP 8.5.
+
+Test dependencies use stable PHPUnit 12.5 and phore/filesystem 1.x releases.
+Known dependency deprecations are covered by `phpunit-baseline.xml`; new
+deprecations fail the test run.
+
 ## Example
 
 ```php
